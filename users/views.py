@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import RegisterForm
+from django.contrib import messages
 
 
 def login_view(request):
@@ -24,17 +26,13 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        email = request.POST.get("email")
-
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return render(request, "users/register_success.html", {"user": user})
-        else:
-            return render(
-                request, "users/register.html", {"error": "Invalid credentials"}
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Account created successfully! You can now log in."
             )
-
-    return render(request, "users/register.html")
+            return redirect("login")
+    else:
+        form = RegisterForm()
+    return render(request, "users/register.html", {"form": form})

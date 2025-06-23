@@ -1,4 +1,7 @@
 {% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
@@ -51,11 +54,11 @@
   </div>
 </nav>
   
-  {% block content %}
-  {% endblock %}
+{% block content %}
+{% endblock %}
 
-  <!-- Footer -->
-   <div class="container">
+<!-- Footer -->
+<div class="container">
   <footer class="py-5">
     <div class="row">
       <div class="col-2">
