@@ -64,25 +64,27 @@ class Plantstage(models.Model):
     description = models.TextField(blank=True, null=True)
 
 
-class Plantstagechange(models.Model):
+class Plantstagelog(models.Model):
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
-        related_name="plant_stage_changes",
-        blank=True,
-        null=True,
+        related_name="plant_stage_logs",
+        blank=False,
+        null=False,
     )
     plant = models.ForeignKey(
         "Plant",
         on_delete=models.CASCADE,
-        related_name="stage_changes",
-        blank=True,
-        null=True,
+        related_name="plant_stage_logs",
+        blank=False,
+        null=False,
     )
     plantstage = models.ForeignKey(
-        "Plantstage", on_delete=models.CASCADE, related_name="changes"
+        "Plantstage", on_delete=models.CASCADE, related_name="plant_stage_logs"
     )
-    date = models.DateTimeField(auto_now_add=True)
+    date_of_change = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Strain(models.Model):
