@@ -4,20 +4,27 @@ from django.db import models
 class Plant(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    strain = models.OneToOneField(
-        "Strain", on_delete=models.CASCADE, related_name="plant", blank=True, null=True
-    )
-    environment = models.OneToOneField(
-        "Environment",
-        on_delete=models.CASCADE,
-        related_name="plant",
+    strain = models.ForeignKey(  # TODO autogenerate plant name by strain name + pheno #x / clone #x
+        "Strain",
+        on_delete=models.SET_NULL,
+        related_name="plants",
         blank=True,
         null=True,
     )
-    grow = models.OneToOneField(
-        "Grow", on_delete=models.CASCADE, related_name="plant", blank=True, null=True
+    environment = models.ForeignKey(  # Required
+        "Environment",
+        on_delete=models.CASCADE,  # TODO user should be warned that he will delete plants inside the env as well
+        related_name="plants",
+        blank=False,
+        null=False,
     )
-    user = models.ForeignKey(
+    grow = models.ForeignKey(  # Not required TODO warn user before deletion
+        "Grow", on_delete=models.SET_NULL, related_name="plants", blank=True, null=True
+    )
+    group = models.ForeignKey(  # Not required TODO warn user before deletion
+        "Group", on_delete=models.SET_NULL, related_name="plants", blank=True, null=True
+    )
+    user = models.ForeignKey(  # required
         "auth.User",
         on_delete=models.CASCADE,
         related_name="plants",
@@ -26,34 +33,29 @@ class Plant(models.Model):
     )
     current_stage = models.ForeignKey(
         "Stage",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,  # TODO relevant for custom user stages, should be warned
         related_name="current_plants",
-        blank=True,
-        null=True,
+        default=None,  # TODO starts with seed
     )
     mediumtype = models.ForeignKey(
         "Mediumtype",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="plants",
         blank=True,
         null=True,
     )
     medium = models.ForeignKey(
         "Medium",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="plants",
         blank=True,
         null=True,
     )
-    image = models.ImageField(
-        upload_to="plants/", blank=True, null=True
-    )  # TODO implement Image
+    # image = models.ImageField( upload_to="plants/", blank=True, null=True)  # TODO implement Image
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    image = models.ImageField(upload_to="plants/", blank=True, null=True)
-
-    def __str__(self):
+    def __str__(self):  # TODO implement __str__ method
         return self.name
 
 

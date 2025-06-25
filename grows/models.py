@@ -152,7 +152,7 @@ class Actiontype(models.Model):
         return self.name
 
 
-class Action(models.Model):
+class ActionLog(models.Model):
     user = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
@@ -207,3 +207,70 @@ class Action(models.Model):
 
     def __str__(self):
         return f"Action {self.action_type.name} for {self.grow.name if self.grow else 'Unknown Grow'}"
+
+
+class Nutrient(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(
+        upload_to="nutrients/", blank=True, null=True
+    )  # TODO Implement image upload
+    producer = models.CharField(max_length=100, blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Nutrition(models.Model):
+    user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        related_name="nutritions",
+        blank=True,
+        null=True,
+    )
+    actionlog = models.ForeignKey(
+        ActionLog,
+        on_delete=models.CASCADE,
+        related_name="nutritions",
+        blank=True,
+        null=True,
+    )
+    nutrient = models.ForeignKey(
+        Nutrient,
+        on_delete=models.CASCADE,
+        related_name="nutritions",
+        blank=True,
+        null=True,
+    )
+    amount = models.FloatField(blank=True, null=True)
+    unit = models.ForeignKey(
+        Unit,
+        on_delete=models.CASCADE,
+        related_name="nutritions",
+        blank=True,
+        null=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(
+        upload_to="groups/", blank=True, null=True
+    )  # TODO implement Image
+    grow = models.ForeignKey(
+        "Grow",
+        on_delete=models.CASCADE,
+        related_name="groups",
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return self.name
