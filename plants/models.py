@@ -44,33 +44,12 @@ class Plant(models.Model):
         blank=True,
         null=True,
     )
-    type = models.ForeignKey(
-        "Planttype",
-        on_delete=models.SET_NULL,
-        related_name="plants",
-        blank=True,
-        null=True,
-    )
     # image = models.ImageField( upload_to="plants/", blank=True, null=True)  # TODO implement Image
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):  # TODO implement __str__ method
+    def __str__(self):
         return self.name
-
-
-class Planttype(models.Model):
-    user = models.ForeignKey(
-        "auth.User",
-        on_delete=models.CASCADE,
-        related_name="planttypes",
-        blank=True,
-        null=True,
-    )
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Plantstage(models.Model):
@@ -78,6 +57,9 @@ class Plantstage(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Plantstagelog(models.Model):
@@ -118,7 +100,10 @@ class Strain(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     # image = models.ImageField(pload_to="strains/", blank=True, null=True)  # TODO implement Image
+    def __str__(self):
+        return self.name
 
 
 class Breeder(models.Model):

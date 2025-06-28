@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% load static %} {% block content %} 
+{% if users_plant_list %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for plant in users_plant_list %}
+  <div class="col">
+    <a href="/plant/{{ plant.id }}/" class="text-decoration-none text-reset">
+      <div class="card h-100" style="height: 300px;">
+        <img src="{% static 'assets/serioticatest.png' %}" class="card-img-top" alt="..." style="height: 180px; object-fit: cover;"/>
+        <div class="card-body">
+          <h5 class="card-title">{{ plant.name }}</h5>
+          <p class="card-text">{{ plant.description }}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% empty %}
+  <li>No datasets found.</li>
+  {% endfor %}
+</div>
+
+{% endif %} {% endblock content %}

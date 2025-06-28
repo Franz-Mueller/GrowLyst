@@ -17,7 +17,7 @@ class Grow(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Grow for {self.user.username if self.user else 'Unknown User'}"
+        return self.name
 
 
 class Growtype(models.Model):
@@ -32,6 +32,9 @@ class Growtype(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Environment(models.Model):
@@ -49,7 +52,7 @@ class Environment(models.Model):
     # image = models.ImageField(upload_to="environments/", blank=True, null=True)  # TODO Implement image upload
 
     def __str__(self):
-        return f"Environment for {self.grow.user.username if self.grow else 'Unknown User'}"
+        return self.name
 
 
 class Measurement(models.Model):
@@ -86,19 +89,24 @@ class Measurement(models.Model):
         blank=True,
         null=True,
     )
-    value = models.FloatField(blank=True, null=True)
+    measurementtype = models.ForeignKey(
+        "Measurementtype",
+        on_delete=models.CASCADE,
+        related_name="measurements",
+        null=True,
+        blank=True,
+    )
+    value = models.FloatField()
     unit = models.ForeignKey(
         "Unit",
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name="measurement",
-        blank=True,
-        null=True,
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Measurement {self.name} for {self.grow.name if self.grow else 'Unknown Grow'}"
+        return f"Measurement for {self.grow.name if self.grow else 'Unknown Grow'}"
 
 
 class Unit(models.Model):
@@ -116,7 +124,7 @@ class Unit(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.name} ({self.symbol})"
+        return self.name
 
 
 class Unittype(models.Model):
@@ -234,9 +242,6 @@ class ActionLog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f"Action {self.action_type.name} for {self.grow.name if self.grow else 'Unknown Grow'}"
-
 
 class Nutrient(models.Model):
     user = models.ForeignKey(
@@ -292,22 +297,16 @@ class Nutrition(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Group(models.Model):
+class Group(models.Model):  # TODO maybe rework so it is not assigned to grow and user
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
         related_name="plantgroups",
-    )
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    # image = models.ImageField(upload_to="groups/", blank=True, null=True)  # TODO implement Image
-    grow = models.ForeignKey(
-        "Grow",
-        on_delete=models.CASCADE,
-        related_name="groups",
         blank=True,
         null=True,
     )
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -315,15 +314,10 @@ class Group(models.Model):
         return self.name
 
 
-class Grouptype(models.Model):
+class Measurementtype(models.Model):
     user = models.ForeignKey(
-        "auth.User",
-        on_delete=models.CASCADE,
-        related_name="grouptypes",
-        blank=True,
-        null=True,
+        "auth.User", on_delete=models.CASCADE, blank=True, null=True
     )
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
+    unittype = models.ForeignKey("Unittype", on_delete=models.PROTECT)

@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import *
 
 admin.site.register(Plant)
-admin.site.register(Planttype)
 admin.site.register(Plantstage)
 admin.site.register(Plantstagelog)
 admin.site.register(Strain)
