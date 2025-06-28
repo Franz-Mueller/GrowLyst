@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 from .models import Plant
+from grows.models import Measurement
 
 
 @login_required
@@ -15,5 +16,6 @@ def plants(request):
 @login_required
 def plant(request, plant_id):
     plant = Plant.objects.get(id=plant_id)
-    context = {"plant": plant}
+    measurements = Measurement.objects.filter(user=request.user, plant=plant)
+    context = {"plant": plant, "measurements": measurements}
     return render(request, "plants/plant.html", context)
