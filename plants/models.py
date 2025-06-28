@@ -12,40 +12,40 @@ class Plant(models.Model):
         null=True,
     )
     environment = models.ForeignKey(  # Required
-        "Environment",
+        "grows.Environment",
         on_delete=models.CASCADE,  # TODO user should be warned that he will delete plants inside the env as well
         related_name="plants",
         blank=False,
         null=False,
     )
     grow = models.ForeignKey(  # Not required TODO warn user before deletion
-        "Grow", on_delete=models.SET_NULL, related_name="plants", blank=True, null=True
-    )
-    group = models.ForeignKey(  # Not required TODO warn user before deletion
-        "Group", on_delete=models.SET_NULL, related_name="plants", blank=True, null=True
-    )
-    user = models.ForeignKey(  # required
-        "auth.User",
-        on_delete=models.CASCADE,
-        related_name="plants",
-        blank=True,
-        null=True,
-    )
-    current_stage = models.ForeignKey(
-        "Stage",
-        on_delete=models.SET_NULL,  # TODO relevant for custom user stages, should be warned
-        related_name="current_plants",
-        default=None,  # TODO starts with seed
-    )
-    mediumtype = models.ForeignKey(
-        "Mediumtype",
+        "grows.Grow",
         on_delete=models.SET_NULL,
         related_name="plants",
         blank=True,
         null=True,
     )
+    group = models.ForeignKey(  # Not required TODO warn user before deletion
+        "grows.Group",
+        on_delete=models.SET_NULL,
+        related_name="plants",
+        blank=True,
+        null=True,
+    )
+    user = models.ForeignKey(  # required
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="plants",
+    )
     medium = models.ForeignKey(
         "Medium",
+        on_delete=models.SET_NULL,
+        related_name="plants",
+        blank=True,
+        null=True,
+    )
+    type = models.ForeignKey(
+        "Planttype",
         on_delete=models.SET_NULL,
         related_name="plants",
         blank=True,
@@ -59,9 +59,25 @@ class Plant(models.Model):
         return self.name
 
 
+class Planttype(models.Model):
+    user = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="planttypes",
+        blank=True,
+        null=True,
+    )
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class Plantstage(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Plantstagelog(models.Model):
@@ -69,48 +85,86 @@ class Plantstagelog(models.Model):
         "auth.User",
         on_delete=models.CASCADE,
         related_name="plant_stage_logs",
-        blank=False,
-        null=False,
     )
     plant = models.ForeignKey(
         "Plant",
         on_delete=models.CASCADE,
         related_name="plant_stage_logs",
-        blank=False,
-        null=False,
     )
     plantstage = models.ForeignKey(
         "Plantstage", on_delete=models.CASCADE, related_name="plant_stage_logs"
     )
-    date_of_change = models.DateTimeField(auto_now_add=True)
+    date_of_change = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class Strain(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    breeder = models.ForeignKey(
-        "Breeder",
+    user = models.ForeignKey(
+        "auth.User",
         on_delete=models.CASCADE,
         related_name="strains",
         blank=True,
         null=True,
     )
-    image = models.ImageField(
-        upload_to="strains/", blank=True, null=True
-    )  # TODO implement Image
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    breeder = models.ForeignKey(
+        "Breeder",
+        on_delete=models.PROTECT,
+        related_name="strains",
+        blank=True,
+        null=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # image = models.ImageField(pload_to="strains/", blank=True, null=True)  # TODO implement Image
+
+
+class Breeder(models.Model):
+    user = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="breeders",
+        blank=True,
+        null=True,
+    )
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    website = models.URLField(blank=True, null=True)
+    # image = models.ImageField(upload_to="breeders/", blank=True, null=True)  # TODO implement Image
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Mediumtype(models.Model):
+    user = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="mediumtypes",
+        blank=True,
+        null=True,
+    )
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
 
 class Medium(models.Model):
+    user = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="mediums",
+        blank=True,
+        null=True,
+    )
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     medium_type = models.ForeignKey(
@@ -120,18 +174,8 @@ class Medium(models.Model):
         blank=True,
         null=True,
     )
-
-    def __str__(self):
-        return self.name
-
-
-class Breeder(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    website = models.URLField(blank=True, null=True)
-    image = models.ImageField(
-        upload_to="breeders/", blank=True, null=True
-    )  # TODO implement Image
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -142,8 +186,6 @@ class Plantphoto(models.Model):
         "auth.User",
         on_delete=models.CASCADE,
         related_name="plant_photos",
-        blank=True,
-        null=True,
     )
     plant = models.ForeignKey(
         "Plant",
@@ -152,7 +194,7 @@ class Plantphoto(models.Model):
         blank=True,
         null=True,
     )
-    image = models.ImageField(upload_to="plant_photos/", blank=True, null=True)
+    # image = models.ImageField(upload_to="plant_photos/", blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
