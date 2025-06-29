@@ -1,7 +1,7 @@
 from django.db import models
 
 
-# region Plantclass PlantQuerySet(models.QuerySet):
+# region Plant
 class PlantQuerySet(models.QuerySet):
     def recent(self):
         return self.order_by("-updated_at")
@@ -13,6 +13,9 @@ class PlantQuerySet(models.QuerySet):
 class PlantManager(models.Manager):
     def get_queryset(self):
         return PlantQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
 
     def recent_for_user(self, user, limit=3):
         return self.get_queryset().for_user(user).recent()[:limit]
@@ -62,7 +65,9 @@ class Plant(models.Model):
         blank=True,
         null=True,
     )
-    # image = models.ImageField( upload_to="plants/", blank=True, null=True)  # TODO implement Image
+    profile_image = models.ImageField(
+        upload_to="plant_profiles/", blank=True, null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -73,6 +78,7 @@ class Plant(models.Model):
 # endregion Plant
 
 
+# region Plantstage
 class Plantstage(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
@@ -83,6 +89,10 @@ class Plantstage(models.Model):
         return self.name
 
 
+# endregion Plantstage
+
+
+# region PlantstageLog
 class Plantstagelog(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -102,6 +112,10 @@ class Plantstagelog(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+# endregion PlantstageLog
+
+
+# region Strain
 class Strain(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -127,6 +141,10 @@ class Strain(models.Model):
         return self.name
 
 
+# endregion Strain
+
+
+# region Breeder
 class Breeder(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -146,6 +164,10 @@ class Breeder(models.Model):
         return self.name
 
 
+# endregion Breeder
+
+
+# region Mediumtype
 class Mediumtype(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -163,6 +185,10 @@ class Mediumtype(models.Model):
         return self.name
 
 
+# endregion Mediumtype
+
+
+# region Medium
 class Medium(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -187,6 +213,10 @@ class Medium(models.Model):
         return self.name
 
 
+# endregion Medium
+
+
+# region Plantphoto
 class Plantphoto(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -207,3 +237,6 @@ class Plantphoto(models.Model):
 
     def __str__(self):
         return f"Photo for {self.plant.name if self.plant else 'Unknown Plant'}"
+
+
+# endregion Plantphoto

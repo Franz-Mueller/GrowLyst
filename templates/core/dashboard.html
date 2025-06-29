@@ -26,8 +26,9 @@
       onclick="window.location='{% url 'plant' plant.id %}'"
     >
       <th scope="row">
+        {% if plant.profile_image %}
         <img
-          src="{% static 'assets/serioticatest.png' %}"
+          src="{{ plant.profile_image.url }}"
           class="rounded-circle border"
           alt="{{ plant.name }}"
           style="
@@ -37,6 +38,7 @@
             background: #f8f9fa;
           "
         />
+        {% endif %}
       </th>
       <td>{{ plant.name }}</td>
       <td>{{ plant.strain }}</td>

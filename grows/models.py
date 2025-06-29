@@ -1,6 +1,7 @@
 from django.db import models
 
 
+# region Grow
 class Grow(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -20,6 +21,8 @@ class Grow(models.Model):
         return self.name
 
 
+# endregion Grow
+# region Growtype
 class Growtype(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -37,6 +40,8 @@ class Growtype(models.Model):
         return self.name
 
 
+# endregion Growtype
+# region Environment
 class Environment(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -55,6 +60,10 @@ class Environment(models.Model):
         return self.name
 
 
+# endregion Environment
+
+
+# region Measurement
 class Measurement(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -109,6 +118,10 @@ class Measurement(models.Model):
         return f"Measurement for {self.grow.name if self.grow else 'Unknown Grow'}"
 
 
+# endregion Measurement
+
+
+# region Unit
 class Unit(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -127,6 +140,10 @@ class Unit(models.Model):
         return self.name
 
 
+# endregion Unit
+
+
+# region Unittype
 class Unittype(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -152,6 +169,8 @@ class Unittype(models.Model):
         return self.name
 
 
+# endregion Unittype
+# region Actioncategory
 class Actioncategory(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -168,6 +187,11 @@ class Actioncategory(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# region Actioncategory
+
+# region Actiontype
 
 
 class Actiontype(models.Model):
@@ -193,6 +217,11 @@ class Actiontype(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# endregion Actiontype
+
+# region ActionLog
 
 
 class ActionLog(models.Model):
@@ -243,6 +272,10 @@ class ActionLog(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+# endregion ActionLog
+
+
+# region Nutrient
 class Nutrient(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -263,6 +296,10 @@ class Nutrient(models.Model):
         return self.name
 
 
+# endregion Nutrient
+
+
+# region Nutrition
 class Nutrition(models.Model):
     user = models.ForeignKey(
         "auth.User",
@@ -297,6 +334,10 @@ class Nutrition(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+# endregion Nutrition
+
+
+# region Group
 class Group(models.Model):  # TODO maybe rework so it is not assigned to grow and user
     user = models.ForeignKey(
         "auth.User",
@@ -314,6 +355,8 @@ class Group(models.Model):  # TODO maybe rework so it is not assigned to grow an
         return self.name
 
 
+# endregion Group
+# region Measurementtype
 class Measurementtype(models.Model):
     user = models.ForeignKey(
         "auth.User", on_delete=models.CASCADE, blank=True, null=True
@@ -324,3 +367,6 @@ class Measurementtype(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# endregion Measurementtype

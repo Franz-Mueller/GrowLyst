@@ -8,7 +8,7 @@ from grows.models import Measurement
 
 @login_required
 def plants(request):
-    plants = Plant.objects.filter(user=request.user)
+    plants = Plant.objects.for_user(request.user)
     content = {"plants": plants, "section": "plants"}
     return render(request, "plants/plants.html", content)
 
