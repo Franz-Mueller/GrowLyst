@@ -45,7 +45,7 @@ class Plant(models.Model):
         related_name="plants",
         blank=True,
         null=True,
-    )
+    )  # TODO make it so that you can only choochse grows that belon to the same user (applies to other models also)
     group = models.ForeignKey(  # Not required TODO warn user before deletion
         "Group",
         on_delete=models.SET_NULL,
@@ -725,15 +725,11 @@ class Nutrition(models.Model):
         "auth.User",
         on_delete=models.CASCADE,
         related_name="nutritions",
-        blank=True,
-        null=True,
     )
     actionlog = models.ForeignKey(
         ActionLog,
         on_delete=models.CASCADE,
         related_name="nutritions",
-        blank=True,
-        null=True,
     )
     nutrient = models.ForeignKey(
         Nutrient,
