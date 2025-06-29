@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "bootstrap5",
     "users.apps.UsersConfig",
     "plants.apps.PlantsConfig",
-    "grows.apps.GrowsConfig",
     "core.apps.CoreConfig",
 ]
 
