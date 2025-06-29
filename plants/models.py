@@ -1,7 +1,25 @@
 from django.db import models
 
 
+# region Plantclass PlantQuerySet(models.QuerySet):
+class PlantQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+
+class PlantManager(models.Manager):
+    def get_queryset(self):
+        return PlantQuerySet(self.model, using=self._db)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+
 class Plant(models.Model):
+    objects = PlantManager()
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     strain = models.ForeignKey(  # TODO autogenerate plant name by strain name + pheno #x / clone #x
@@ -50,6 +68,9 @@ class Plant(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# endregion Plant
 
 
 class Plantstage(models.Model):

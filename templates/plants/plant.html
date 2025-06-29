@@ -1,74 +1,106 @@
-{% extends "base.html" %} {% load static %} {% block content %}
-<div class="container-fluid mt-4">
-  <div class="card p-4 shadow-lg" style="min-height: 70vh">
-    <div class="row g-4 align-items-center">
-      <div class="col-auto">
-        <img
-          src="{% static 'assets/serioticatest.png' %}"
-          class="rounded-circle border"
-          alt="{{ plant.name }}"
-          style="
-            width: 140px;
-            height: 140px;
-            object-fit: contain;
-            background: #f8f9fa;
-          "
-        />
-      </div>
-      <div class="col">
-        <h1 class="mb-1">{{ plant.name }}</h1>
-        {% if plant.strain %}
-        <p class="mb-1"><strong>Strain:</strong> {{ plant.strain }}</p>
-        {% endif %} {% if plant.type %}
-        <p class="mb-1"><strong>Type:</strong> {{ plant.type }}</p>
-        {% endif %} {% if plant.environment %}
-        <p class="mb-1">
-          <strong>Environment:</strong> {{ plant.environment }}
-        </p>
-        {% endif %} {% if plant.grow %}
-        <p class="mb-1"><strong>Grow:</strong> {{ plant.grow }}</p>
-        {% endif %} {% if plant.group %}
-        <p class="mb-1"><strong>Group:</strong> {{ plant.group }}</p>
-        {% endif %} {% if plant.medium %}
-        <p class="mb-1"><strong>Medium:</strong> {{ plant.medium }}</p>
-        {% endif %} {% if plant.description %}
-        <p class="mt-3">
-          <strong>Description:</strong> {{ plant.description }}
-        </p>
-        {% endif %}
-        <div class="text-muted mt-4">
-          <small>
-            Created: {{ plant.created_at|date:"M d, Y H:i" }}<br />
-            Updated: {{ plant.updated_at|date:"M d, Y H:i" }}
-          </small>
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
+<div class="container mt-4">
+  <div class="container-fluid mt-4">
+    <div class="card p-4 shadow-lg" style="min-height: 70vh">
+      <div class="row g-4 align-items-center">
+        <div class="col-auto">
+          <img
+            src="{% static 'assets/serioticatest.png' %}"
+            class="rounded-circle border"
+            alt="{{ plant.name }}"
+            style="
+              width: 140px;
+              height: 140px;
+              object-fit: contain;
+              background: #f8f9fa;
+            "
+          />
         </div>
-        <a href="{% url 'plants' %}" class="btn btn-outline-secondary mt-4"
-          >← Back to My Plants</a
-        >
+        <div class="col">
+          <h1 class="mb-1">{{ plant.name }}</h1>
+          {% if plant.strain %}
+          <p class="mb-1"><strong>Strain:</strong> {{ plant.strain }}</p>
+          {% endif %} {% if plant.type %}
+          <p class="mb-1"><strong>Type:</strong> {{ plant.type }}</p>
+          {% endif %} {% if plant.environment %}
+          <p class="mb-1">
+            <strong>Environment:</strong> {{ plant.environment }}
+          </p>
+          {% endif %} {% if plant.grow %}
+          <p class="mb-1"><strong>Grow:</strong> {{ plant.grow }}</p>
+          {% endif %} {% if plant.group %}
+          <p class="mb-1"><strong>Group:</strong> {{ plant.group }}</p>
+          {% endif %} {% if plant.medium %}
+          <p class="mb-1"><strong>Medium:</strong> {{ plant.medium }}</p>
+          {% endif %}
+
+          <div id="desc-container-{{ plant.id }}">
+            <span id="desc-preview-{{ plant.id }}">
+              <strong>Description: </strong>
+              <!---->{{ plant.description|truncatechars:100 }}
+              <!---->{% if plant.description|length > 100 %} ...
+              <a
+                href="javascript:void(0);"
+                onclick="showFullDesc({{ plant.id }})"
+                >Show more</a
+              >
+              {% endif %}
+            </span>
+            <span id="desc-full-{{ plant.id }}" style="display: none">
+              <strong>Description: </strong>{{ plant.description|linebreaksbr }}
+              <a
+                href="javascript:void(0);"
+                onclick="showPreviewDesc({{ plant.id }})"
+                >Show less</a
+              >
+            </span>
+          </div>
+
+          <script>
+            function showFullDesc(id) {
+              document.getElementById("desc-preview-" + id).style.display =
+                "none";
+              document.getElementById("desc-full-" + id).style.display = "";
+            }
+            function showPreviewDesc(id) {
+              document.getElementById("desc-full-" + id).style.display = "none";
+              document.getElementById("desc-preview-" + id).style.display = "";
+            }
+          </script>
+          <div class="text-muted mt-4">
+            <small>
+              Created: {{ plant.created_at|date:"M d, Y H:i" }}<br />
+              Updated: {{ plant.updated_at|date:"M d, Y H:i" }}
+            </small>
+          </div>
+          <a href="{% url 'plants' %}" class="btn btn-outline-secondary mt-4"
+            >← Back to My Plants</a
+          >
+        </div>
+        <h5>Measurements</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Created</th>
+              <th scope="col">Measurement</th>
+              <th scope="col">Value</th>
+              <th scope="col">Unit</th>
+            </tr>
+          </thead>
+          {% if measurements %}
+          <tbody>
+            {% for measurement in measurements%}
+            <tr>
+              <th scope="row">{{ measurement.created_at }}</th>
+              <td>{{ measurement.measurementtype }}</td>
+              <td>{{ measurement.value }}</td>
+              <td>{{ measurement.unit }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          {% endif %}
+        </table>
       </div>
-      <h5>Measurements</h5>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Created</th>
-            <th scope="col">Measurement</th>
-            <th scope="col">Value</th>
-            <th scope="col">Unit</th>
-          </tr>
-        </thead>
-        {% if measurements %}
-        <tbody>
-          {% for measurement in measurements%}
-          <tr>
-            <th scope="row">{{ measurement.created_at }}</th>
-            <td>{{ measurement.measurementtype }}</td>
-            <td>{{ measurement.value }}</td>
-            <td>{{ measurement.unit }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-        {% endif %}
-      </table>
     </div>
   </div>
 </div>

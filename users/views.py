@@ -12,8 +12,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirect to a success page.
-            ...
+            return redirect("/")
         else:
             # Return an 'invalid login' error message.
             ...
@@ -22,6 +21,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    return redirect("/")
 
 
 def register_view(request):
