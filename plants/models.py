@@ -79,7 +79,16 @@ class Plant(models.Model):
 
 
 # region Plantstage
+class PlantstageQuerySet(models.QuerySet): ...
+
+
+class PlantstageManager(models.Manager):
+    def get_queryset(self):
+        return PlantstageQuerySet(self.model, using=self._db)
+
+
 class Plantstage(models.Model):
+    objects = PlantstageManager()
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -93,7 +102,16 @@ class Plantstage(models.Model):
 
 
 # region PlantstageLog
+class PlantstagelogQuerySet(models.QuerySet): ...
+
+
+class PlantstagelogManager(models.Manager):
+    def get_queryset(self):
+        return PlantstagelogQuerySet(self.model, using=self._db)
+
+
 class Plantstagelog(models.Model):
+    objects = PlantstagelogManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -116,7 +134,16 @@ class Plantstagelog(models.Model):
 
 
 # region Strain
+class StrainQuerySet(models.QuerySet): ...
+
+
+class StrainManager(models.Manager):
+    def get_queryset(self):
+        return StrainQuerySet(self.model, using=self._db)
+
+
 class Strain(models.Model):
+    objects = StrainManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -145,7 +172,16 @@ class Strain(models.Model):
 
 
 # region Breeder
+class BreederQuerySet(models.QuerySet): ...
+
+
+class BreederManager(models.Manager):
+    def get_queryset(self):
+        return BreederQuerySet(self.model, using=self._db)
+
+
 class Breeder(models.Model):
+    objects = BreederManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -168,7 +204,16 @@ class Breeder(models.Model):
 
 
 # region Mediumtype
+class MediumtypeQuerySet(models.QuerySet): ...
+
+
+class MediumtypeManager(models.Manager):
+    def get_queryset(self):
+        return MediumtypeQuerySet(self.model, using=self._db)
+
+
 class Mediumtype(models.Model):
+    objects = MediumtypeManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -189,7 +234,16 @@ class Mediumtype(models.Model):
 
 
 # region Medium
+class MediumQuerySet(models.QuerySet): ...
+
+
+class MediumManager(models.Manager):
+    def get_queryset(self):
+        return MediumQuerySet(self.model, using=self._db)
+
+
 class Medium(models.Model):
+    objects = MediumManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -217,7 +271,16 @@ class Medium(models.Model):
 
 
 # region Plantphoto
+class PlantphotoQuerySet(models.QuerySet): ...
+
+
+class PlantphotoManager(models.Manager):
+    def get_queryset(self):
+        return PlantphotoQuerySet(self.model, using=self._db)
+
+
 class Plantphoto(models.Model):
+    objects = PlantphotoManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,

@@ -2,7 +2,16 @@ from django.db import models
 
 
 # region Grow
+class GrowQuerySet(models.QuerySet): ...
+
+
+class GrowManager(models.Manager):
+    def get_queryset(self):
+        return GrowQuerySet(self.model, using=self._db)
+
+
 class Grow(models.Model):
+    objects = GrowManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -23,7 +32,16 @@ class Grow(models.Model):
 
 # endregion Grow
 # region Growtype
+class GrowtypeQuerySet(models.QuerySet): ...
+
+
+class GrowtypeManager(models.Manager):
+    def get_queryset(self):
+        return GrowtypeQuerySet(self.model, using=self._db)
+
+
 class Growtype(models.Model):
+    objects = GrowtypeManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -42,7 +60,16 @@ class Growtype(models.Model):
 
 # endregion Growtype
 # region Environment
+class EnvironmentQuerySet(models.QuerySet): ...
+
+
+class EnvironmentManager(models.Manager):
+    def get_queryset(self):
+        return EnvironmentQuerySet(self.model, using=self._db)
+
+
 class Environment(models.Model):
+    objects = EnvironmentManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -64,7 +91,16 @@ class Environment(models.Model):
 
 
 # region Measurement
+class MeasurementQuerySet(models.QuerySet): ...
+
+
+class MeasurementManager(models.Manager):
+    def get_queryset(self):
+        return MeasurementQuerySet(self.model, using=self._db)
+
+
 class Measurement(models.Model):
+    objects = MeasurementManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -122,7 +158,16 @@ class Measurement(models.Model):
 
 
 # region Unit
+class UnitQuerySet(models.QuerySet): ...
+
+
+class UnitManager(models.Manager):
+    def get_queryset(self):
+        return UnitQuerySet(self.model, using=self._db)
+
+
 class Unit(models.Model):
+    objects = UnitManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -144,7 +189,16 @@ class Unit(models.Model):
 
 
 # region Unittype
+class UnittypeQuerySet(models.QuerySet): ...
+
+
+class UnittypeManager(models.Manager):
+    def get_queryset(self):
+        return UnittypeQuerySet(self.model, using=self._db)
+
+
 class Unittype(models.Model):
+    objects = UnittypeManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -171,7 +225,16 @@ class Unittype(models.Model):
 
 # endregion Unittype
 # region Actioncategory
+class ActioncategoryQuerySet(models.QuerySet): ...
+
+
+class ActioncategoryManager(models.Manager):
+    def get_queryset(self):
+        return ActioncategoryQuerySet(self.model, using=self._db)
+
+
 class Actioncategory(models.Model):
+    objects = ActioncategoryManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -191,10 +254,18 @@ class Actioncategory(models.Model):
 
 # region Actioncategory
 
+
 # region Actiontype
+class ActiontypeQuerySet(models.QuerySet): ...
+
+
+class ActiontypeManager(models.Manager):
+    def get_queryset(self):
+        return ActiontypeQuerySet(self.model, using=self._db)
 
 
 class Actiontype(models.Model):
+    objects = ActiontypeManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -221,10 +292,18 @@ class Actiontype(models.Model):
 
 # endregion Actiontype
 
+
 # region ActionLog
+class ActionLogQuerySet(models.QuerySet): ...
+
+
+class ActionLogManager(models.Manager):
+    def get_queryset(self):
+        return ActionLogQuerySet(self.model, using=self._db)
 
 
 class ActionLog(models.Model):
+    objects = ActionLogManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -276,7 +355,16 @@ class ActionLog(models.Model):
 
 
 # region Nutrient
+class NutrientQuerySet(models.QuerySet): ...
+
+
+class NutrientManager(models.Manager):
+    def get_queryset(self):
+        return NutrientQuerySet(self.model, using=self._db)
+
+
 class Nutrient(models.Model):
+    objects = NutrientManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -300,7 +388,16 @@ class Nutrient(models.Model):
 
 
 # region Nutrition
+class NutritionQuerySet(models.QuerySet): ...
+
+
+class NutritionManager(models.Manager):
+    def get_queryset(self):
+        return NutritionQuerySet(self.model, using=self._db)
+
+
 class Nutrition(models.Model):
+    objects = NutritionManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -338,7 +435,16 @@ class Nutrition(models.Model):
 
 
 # region Group
+class GroupQuerySet(models.QuerySet): ...
+
+
+class GroupManager(models.Manager):
+    def get_queryset(self):
+        return GroupQuerySet(self.model, using=self._db)
+
+
 class Group(models.Model):  # TODO maybe rework so it is not assigned to grow and user
+    objects = GroupManager()
     user = models.ForeignKey(
         "auth.User",
         on_delete=models.CASCADE,
@@ -357,7 +463,16 @@ class Group(models.Model):  # TODO maybe rework so it is not assigned to grow an
 
 # endregion Group
 # region Measurementtype
+class MeasurementtypeQuerySet(models.QuerySet): ...
+
+
+class MeasurementtypeManager(models.Manager):
+    def get_queryset(self):
+        return MeasurementtypeQuerySet(self.model, using=self._db)
+
+
 class Measurementtype(models.Model):
+    objects = MeasurementtypeManager()
     user = models.ForeignKey(
         "auth.User", on_delete=models.CASCADE, blank=True, null=True
     )
