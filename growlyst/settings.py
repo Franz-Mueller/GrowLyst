@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "plants.apps.PlantsConfig",
     "grows.apps.GrowsConfig",
+    "core.apps.CoreConfig",
 ]
 
 MIDDLEWARE = [
