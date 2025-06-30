@@ -6,13 +6,36 @@
     <meta charset="UTF-8" />
     <title>{% block title %}GrowLyst{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Optionally, your custom styles -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
+    <link href="css/styles.css" rel="stylesheet" />
     {% block extra_head %}{% endblock %}
+    <style>
+      .sidebar .nav .collapse .nav-link {
+        color: #cbd5e1;
+        font-size: 0.96em;
+        transition: background 0.2s, color 0.2s;
+      }
+      .sidebar .nav .collapse .nav-link.active,
+      .sidebar .nav .collapse .nav-link.bg-primary {
+        background: #2c5282 !important;
+        color: #fff !important;
+      }
+      /* Chevron rotation animation */
+      .chevron-transition {
+        transition: transform 0.3s cubic-bezier(0.4, 2, 0.6, 1);
+      }
+      .chevron-rotate {
+        transform: rotate(180deg);
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -100,6 +123,7 @@
             </a>
             <hr class="text-secondary" />
             <ul class="nav flex-column">
+              <!-- Dashboard -->
               <li class="nav-item">
                 <a
                   href="/"
@@ -108,15 +132,57 @@
                   <i class="bi bi-house me-2"></i> Dashboard
                 </a>
               </li>
+              <!-- Plants with collapsible sub-menu -->
               <li class="nav-item">
                 <a
-                  href="/plants"
-                  class="nav-link text-white {% if section == 'plants' %}active bg-primary{% endif %}"
+                  class="nav-link text-white d-flex align-items-center {% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}active bg-primary{% endif %}"
+                  data-bs-toggle="collapse"
+                  href="#plantsSubmenu"
+                  role="button"
+                  aria-expanded="{% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}true{% else %}false{% endif %}"
+                  aria-controls="plantsSubmenu"
+                  id="plantsMenuLink"
                 >
-                  <i class="bi bi-flower1 me-2"></i> Plants
+                  <i class="bi bi-flower1 me-2"></i>
+                  Plants
+                  <i
+                    class="bi bi-chevron-down ms-auto chevron-transition {% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}chevron-rotate{% endif %}"
+                    id="plantsChevron"
+                  ></i>
                 </a>
+                <div
+                  class="collapse {% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}show{% endif %}"
+                  id="plantsSubmenu"
+                >
+                  <ul class="nav flex-column ms-4 mb-0">
+                    <li class="nav-item">
+                      <a
+                        href="/grows"
+                        class="nav-link {% if section == 'grows' %}active bg-primary{% else %}text-white{% endif %}"
+                      >
+                        <i class="bi bi-collection me-2"></i> Grows
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        href="/environments"
+                        class="nav-link {% if section == 'environments' %}active bg-primary{% else %}text-white{% endif %}"
+                      >
+                        <i class="bi bi-body-text me-2"></i> Environments
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        href="/groups"
+                        class="nav-link {% if section == 'groups' %}active bg-primary{% else %}text-white{% endif %}"
+                      >
+                        <i class="bi bi-dribbble me-2"></i> Groups
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </li>
-              <!-- Add more sections as needed -->
+              <!-- Add more parent nav-items as needed -->
             </ul>
             <hr class="text-secondary" />
             <div class="dropdown ps-3">
@@ -148,7 +214,6 @@
             </div>
           </div>
         </nav>
-
         <!-- Main Content -->
         <main class="col-md-10 ms-sm-auto px-md-4 py-4">
           {% block content %}{% endblock %}
@@ -177,5 +242,22 @@
         </div>
       </div>
     </div>
+    <script>
+      // Chevron rotation for collapsible Plants submenu
+      document.addEventListener("DOMContentLoaded", function () {
+        var plantsMenuLink = document.getElementById("plantsMenuLink");
+        var plantsChevron = document.getElementById("plantsChevron");
+        var plantsSubmenu = document.getElementById("plantsSubmenu");
+
+        if (plantsMenuLink && plantsChevron && plantsSubmenu) {
+          plantsSubmenu.addEventListener("show.bs.collapse", function () {
+            plantsChevron.classList.add("chevron-rotate");
+          });
+          plantsSubmenu.addEventListener("hide.bs.collapse", function () {
+            plantsChevron.classList.remove("chevron-rotate");
+          });
+        }
+      });
+    </script>
   </body>
 </html>

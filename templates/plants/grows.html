@@ -1,0 +1,36 @@
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
+<style>
+  /* Makes entire tr clickable and shows pointer on hover */
+  .table-row-link {
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .table-row-link:hover {
+    background: #f1f3f4;
+  }
+</style>
+<h5>Grows</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Created at</th>
+    </tr>
+  </thead>
+  {% if grows %}
+  <tbody class="align-middle">
+    {% for grow in grows %}
+    <tr
+      class="table-row-link"
+      onclick="window.location='{% url 'grow' grow.id %}'"
+    >
+      <th>{{ grow.name }}</td>
+      <td>{{ grow.type }}</td>
+      <td>{{ grow.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% endif %}
+</table>
+{% endblock content %}

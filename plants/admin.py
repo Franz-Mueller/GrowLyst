@@ -2,23 +2,23 @@ from django.contrib import admin
 from .models import *
 
 admin.site.register(Plant)
-admin.site.register(Plantstage)
-admin.site.register(Plantstagelog)
-admin.site.register(Strain)
-admin.site.register(Breeder)
-admin.site.register(Mediumtype)
-admin.site.register(Medium)
-admin.site.register(Plantphoto)
+admin.site.register(Plantstage)  # TODO
+admin.site.register(Plantstagelog)  # TODO
+admin.site.register(Strain)  # TODO
+admin.site.register(Breeder)  # TODO
+admin.site.register(Mediumtype)  # TODO
+admin.site.register(Medium)  # TODO
+admin.site.register(Plantphoto)  # TODO
 admin.site.register(Grow)
-admin.site.register(Growtype)
-admin.site.register(Environment)
-admin.site.register(Measurement)
-admin.site.register(Unit)
-admin.site.register(Unittype)
-admin.site.register(Actioncategory)
-admin.site.register(Actiontype)
-admin.site.register(ActionLog)
-admin.site.register(Nutrient)
-admin.site.register(Nutrition)
-admin.site.register(Group)
-admin.site.register(Measurementtype)
+admin.site.register(Growtype)  # TODO
+admin.site.register(Environment)  # TODO
+admin.site.register(Measurement)  # TODO
+admin.site.register(Unit)  # TODO
+admin.site.register(Unittype)  # TODO
+admin.site.register(Actioncategory)  # TODO
+admin.site.register(Actiontype)  # TODO
+admin.site.register(ActionLog)  # TODO
+admin.site.register(Nutrient)  # TODO
+admin.site.register(Nutrition)  # TODO
+admin.site.register(Group)  # TODO
+admin.site.register(Measurementtype)  # TODO

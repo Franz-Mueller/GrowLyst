@@ -15,7 +15,11 @@
       <th scope="col"><h5>Plants</h5></th>
       <th scope="col">Name</th>
       <th scope="col">Strain</th>
-      <th scope="col">Type</th>
+      <th scope="col">Environment</th>
+      <th scope="col">Grow</th>
+      <th scope="col">Group</th>
+      <th scope="col">Medium</th>
+      <th scope="col">Updated at</th>
     </tr>
   </thead>
   {% if plants %}
@@ -42,7 +46,11 @@
       </th>
       <td>{{ plant.name }}</td>
       <td>{{ plant.strain }}</td>
-      <td>{{ plant.type }}</td>
+      <td>{{ plant.environment }}</td>
+      <td>{{ plant.grow }}</td>
+      <td>{{ plant.group }}</td>
+      <td>{{ plant.medium }}</td>
+      <td>{{ plant.updated_at }}</td>
     </tr>
     {% endfor %}
   </tbody>

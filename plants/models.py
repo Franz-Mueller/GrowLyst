@@ -321,16 +321,26 @@ class Plantphoto(models.Model):
 
 
 # endregion Plantphoto
-from django.db import models
 
 
 # region Grow
-class GrowQuerySet(models.QuerySet): ...
+class GrowQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class GrowManager(models.Manager):
     def get_queryset(self):
         return GrowQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Grow(models.Model):
@@ -345,7 +355,6 @@ class Grow(models.Model):
     )
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    # image = models.ImageField(upload_to="grows/", blank=True, null=True)  # TODO Implement image upload
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -355,12 +364,23 @@ class Grow(models.Model):
 
 # endregion Grow
 # region Growtype
-class GrowtypeQuerySet(models.QuerySet): ...
+class GrowtypeQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class GrowtypeManager(models.Manager):
     def get_queryset(self):
         return GrowtypeQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Growtype(models.Model):
@@ -383,12 +403,23 @@ class Growtype(models.Model):
 
 # endregion Growtype
 # region Environment
-class EnvironmentQuerySet(models.QuerySet): ...
+class EnvironmentQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class EnvironmentManager(models.Manager):
     def get_queryset(self):
         return EnvironmentQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Environment(models.Model):
@@ -754,12 +785,23 @@ class Nutrition(models.Model):
 
 
 # region Group
-class GroupQuerySet(models.QuerySet): ...
+class GroupQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class GroupManager(models.Manager):
     def get_queryset(self):
         return GroupQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Group(models.Model):  # TODO maybe rework so it is not assigned to grow and user

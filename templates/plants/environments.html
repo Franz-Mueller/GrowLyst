@@ -1,0 +1,32 @@
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
+<style>
+  /* Makes entire tr clickable and shows pointer on hover */
+  .table-row-link {
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .table-row-link:hover {
+    background: #f1f3f4;
+  }
+</style>
+<h5>Environments</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+    </tr>
+  </thead>
+  {% if environments %}
+  <tbody class="align-middle">
+    {% for environment in environments %}
+    <tr
+      class="table-row-link"
+      onclick="window.location='{% url 'environment' environment.id %}'"
+    >
+      <th>{{ environment.name }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% endif %}
+</table>
+{% endblock content %}
