@@ -1,32 +1,44 @@
-{% extends "dashboard_base.html" %} {% load static %} {% block content %}
+
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>Environments</h5>
+        <a href="/environment/add/" class="btn btn-primary">Add New</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+<th scope="col">Location</th>
+<th scope="col">Type</th>
+<th scope="col">Grow</th>
+                <th scope="col">Updated at</th>
+            </tr>
+        </thead>
+        {% if environments %}
+        <tbody class="align-middle">
+        {% for item in environments %}
+            <tr class="table-row-link" onclick="window.location='{% url 'environment' item.id %}'">
+                <td>{{ item.name }}</td>
+<td>{{ item.location }}</td>
+<td>{{ item.type }}</td>
+<td>{{ item.grow }}</td>
+                <td>{{ item.updated_at }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+</div>
 <style>
-  /* Makes entire tr clickable and shows pointer on hover */
-  .table-row-link {
+.table-row-link {
     cursor: pointer;
     transition: background 0.1s;
-  }
-  .table-row-link:hover {
+}
+.table-row-link:hover {
     background: #f1f3f4;
-  }
+}
 </style>
-<h5>Environments</h5>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-    </tr>
-  </thead>
-  {% if environments %}
-  <tbody class="align-middle">
-    {% for environment in environments %}
-    <tr
-      class="table-row-link"
-      onclick="window.location='{% url 'environment' environment.id %}'"
-    >
-      <th>{{ environment.name }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-  {% endif %}
-</table>
 {% endblock content %}

@@ -1,13 +1,27 @@
-{% extends "dashboard_base.html" %} {% load static %} {% block content %}
+
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block content %}
 <div class="container mt-4">
-  <div class="container-fluid mt-4">
-    <div class="card p-4 shadow-lg" style="min-height: 70vh">
-      <div class="row g-4 align-items-center">
-        <div class="col">
-          <h1 class="mb-1">{{ grow.name }}</h1>
+    <div class="container-fluid mt-4">
+        <div class="card p-4 shadow-lg" style="min-height: 60vh">
+            <h1 class="mb-1">{{ environment.name|default:"Environment" }}</h1>
+            <dl class="row mt-4">
+                <dt class="col-sm-3">Location:</dt><dd class="col-sm-9">{{ environment.location }}</dd>
+<dt class="col-sm-3">Type:</dt><dd class="col-sm-9">{{ environment.type }}</dd>
+<dt class="col-sm-3">Grow:</dt><dd class="col-sm-9">{{ environment.grow }}</dd>
+<dt class="col-sm-3">Description:</dt><dd class="col-sm-9">{{ environment.description }}</dd>
+<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ environment.created_at }}</dd>
+<dt class="col-sm-3">Updated:</dt><dd class="col-sm-9">{{ environment.updated_at }}</dd>
+            </dl>
+            <div class="text-muted mt-4">
+                <small>
+                    Created: {{ environment.created_at|date:"M d, Y H:i" }}<br />
+                    Updated: {{ environment.updated_at|date:"M d, Y H:i" }}
+                </small>
+            </div>
+            <a href="{% url 'environments' %}" class="btn btn-outline-secondary mt-4">← Back to Environments</a>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock %}

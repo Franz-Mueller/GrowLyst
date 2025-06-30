@@ -1,0 +1,24 @@
+
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="container-fluid mt-4">
+        <div class="card p-4 shadow-lg" style="min-height: 60vh">
+            <h1 class="mb-1">{{ nutrient.name|default:"Nutrient" }}</h1>
+            <dl class="row mt-4">
+                <dt class="col-sm-3">Description:</dt><dd class="col-sm-9">{{ nutrient.description }}</dd>
+<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ nutrient.created_at }}</dd>
+<dt class="col-sm-3">Updated:</dt><dd class="col-sm-9">{{ nutrient.updated_at }}</dd>
+            </dl>
+            <div class="text-muted mt-4">
+                <small>
+                    Created: {{ nutrient.created_at|date:"M d, Y H:i" }}<br />
+                    Updated: {{ nutrient.updated_at|date:"M d, Y H:i" }}
+                </small>
+            </div>
+            <a href="{% url 'nutrients' %}" class="btn btn-outline-secondary mt-4">← Back to Nutrients</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

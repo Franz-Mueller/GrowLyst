@@ -1,263 +1,236 @@
-{% load static %} {% load bootstrap5 %} {% bootstrap_css %}
-{%bootstrap_javascript %}
-<!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}GrowLyst{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link href="css/styles.css" rel="stylesheet" />
-    {% block extra_head %}{% endblock %}
-    <style>
-      .sidebar .nav .collapse .nav-link {
-        color: #cbd5e1;
-        font-size: 0.96em;
-        transition: background 0.2s, color 0.2s;
-      }
-      .sidebar .nav .collapse .nav-link.active,
-      .sidebar .nav .collapse .nav-link.bg-primary {
-        background: #2c5282 !important;
-        color: #fff !important;
-      }
-      /* Chevron rotation animation */
-      .chevron-transition {
-        transition: transform 0.3s cubic-bezier(0.4, 2, 0.6, 1);
-      }
-      .chevron-rotate {
-        transform: rotate(180deg);
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-          <img
-            src="{% static 'assets/logo.png' %}"
-            alt=""
-            width="30"
-            height="24"
-            class="d-inline-block align-text-top"
-          />
-          GrowLyst
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+{% extends "dashboard_base.html" %} {% load static %} {% load bootstrap5 %}
+{%block content %}
+<div class="container-fluid px-0">
+  <div class="row">
+    <div class="col-12 mb-4">
+      <h2 class="fw-bold">Dashboard Overview</h2>
+    </div>
+
+    <!-- Plants Section -->
+    <div class="col-xl-6 col-lg-12 mb-4">
+      <div class="card shadow-sm">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
-              >
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row min-vh-100">
-        <!-- Sidebar -->
-        <nav class="col-md-2 d-none d-md-block bg-dark sidebar py-4">
-          <div class="position-sticky">
+          <span><i class="bi bi-flower1 me-2"></i>Plants</span>
+          <div>
             <a
-              href="/"
-              class="d-flex align-items-center mb-3 text-white text-decoration-none ps-3"
+              href="{% url 'plants' %}"
+              class="btn btn-outline-secondary btn-sm"
+              >View all</a
             >
-              <span class="fs-4 fw-bold">GrowLyst</span>
-            </a>
-            <hr class="text-secondary" />
-            <ul class="nav flex-column">
-              <!-- Dashboard -->
-              <li class="nav-item">
-                <a
-                  href="/"
-                  class="nav-link text-white {% if section == 'dashboard' %}active bg-primary{% endif %}"
-                >
-                  <i class="bi bi-house me-2"></i> Dashboard
-                </a>
-              </li>
-              <!-- Plants with collapsible sub-menu -->
-              <li class="nav-item">
-                <a
-                  class="nav-link text-white d-flex align-items-center {% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}active bg-primary{% endif %}"
-                  data-bs-toggle="collapse"
-                  href="#plantsSubmenu"
-                  role="button"
-                  aria-expanded="{% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}true{% else %}false{% endif %}"
-                  aria-controls="plantsSubmenu"
-                  id="plantsMenuLink"
-                >
-                  <i class="bi bi-flower1 me-2"></i>
-                  Plants
-                  <i
-                    class="bi bi-chevron-down ms-auto chevron-transition {% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}chevron-rotate{% endif %}"
-                    id="plantsChevron"
-                  ></i>
-                </a>
-                <div
-                  class="collapse {% if section == 'plants' or section == 'grows' or section == 'environments' or section == 'groups' %}show{% endif %}"
-                  id="plantsSubmenu"
-                >
-                  <ul class="nav flex-column ms-4 mb-0">
-                    <li class="nav-item">
-                      <a
-                        href="/grows"
-                        class="nav-link {% if section == 'grows' %}active bg-primary{% else %}text-white{% endif %}"
-                      >
-                        <i class="bi bi-collection me-2"></i> Grows
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a
-                        href="/environments"
-                        class="nav-link {% if section == 'environments' %}active bg-primary{% else %}text-white{% endif %}"
-                      >
-                        <i class="bi bi-body-text me-2"></i> Environments
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a
-                        href="/groups"
-                        class="nav-link {% if section == 'groups' %}active bg-primary{% else %}text-white{% endif %}"
-                      >
-                        <i class="bi bi-dribbble me-2"></i> Groups
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <!-- Add more parent nav-items as needed -->
-            </ul>
-            <hr class="text-secondary" />
-            <div class="dropdown ps-3">
-              <a
-                href="#"
-                class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <img
-                  src="https://github.com/mdo.png"
-                  alt="Profile"
-                  width="32"
-                  height="32"
-                  class="rounded-circle me-2"
-                />
-                <strong>{{ user.username|default:"User" }}</strong>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="{% url 'logout' %}"
-                    >Sign out</a
-                  >
-                </li>
-              </ul>
-            </div>
+            <a href="/plant/add/" class="btn btn-primary btn-sm ms-2"
+              >Add New</a
+            >
           </div>
-        </nav>
-        <!-- Main Content -->
-        <main class="col-md-10 ms-sm-auto px-md-4 py-4">
-          {% block content %}{% endblock %}
-        </main>
-        <!-- Footer -->
-        <div class="container">
-          <footer
-            class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
-          >
-            <div class="col-md-4 d-flex align-items-center">
-              <span class="mb-3 mb-md-0 text-body-secondary"
-                >© 2025 GrowLyst</span
+        </div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Strain</th>
+                <th>Environment</th>
+                <th>Grow</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            {% if plants %}
+            <tbody>
+              {% for plant in plants|slice:":5" %}
+              <tr
+                onclick="window.location='{% url 'plant' plant.id %}'"
+                style="cursor: pointer"
               >
-            </div>
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-              <li class="ms-3">
-                <a class="link-dark" href="#"
-                  ><i class="bi bi-instagram"></i
-                ></a>
-              </li>
-              <li class="ms-3">
-                <a class="link-dark" href="#"><i class="bi bi-facebook"></i></a>
-              </li>
-            </ul>
-          </footer>
+                <td>{{ plant.name }}</td>
+                <td>{{ plant.strain }}</td>
+                <td>{{ plant.environment }}</td>
+                <td>{{ plant.grow }}</td>
+                <td>{{ plant.updated_at|date:"M d, Y" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            {% else %}
+            <tbody>
+              <tr>
+                <td colspan="5" class="text-center text-muted">
+                  No plants found.
+                </td>
+              </tr>
+            </tbody>
+            {% endif %}
+          </table>
         </div>
       </div>
     </div>
-    <script>
-      // Chevron rotation for collapsible Plants submenu
-      document.addEventListener("DOMContentLoaded", function () {
-        var plantsMenuLink = document.getElementById("plantsMenuLink");
-        var plantsChevron = document.getElementById("plantsChevron");
-        var plantsSubmenu = document.getElementById("plantsSubmenu");
 
-        if (plantsMenuLink && plantsChevron && plantsSubmenu) {
-          plantsSubmenu.addEventListener("show.bs.collapse", function () {
-            plantsChevron.classList.add("chevron-rotate");
-          });
-          plantsSubmenu.addEventListener("hide.bs.collapse", function () {
-            plantsChevron.classList.remove("chevron-rotate");
-          });
-        }
-      });
-    </script>
-  </body>
-</html>
+    <!-- Grows Section -->
+    <div class="col-xl-6 col-lg-12 mb-4">
+      <div class="card shadow-sm">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <span><i class="bi bi-collection me-2"></i>Grows</span>
+          <div>
+            <a href="{% url 'grows' %}" class="btn btn-outline-secondary btn-sm"
+              >View all</a
+            >
+            <a href="/grow/add/" class="btn btn-primary btn-sm ms-2">Add New</a>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            {% if grows %}
+            <tbody>
+              {% for grow in grows|slice:":5" %}
+              <tr
+                onclick="window.location='{% url 'grow' grow.id %}'"
+                style="cursor: pointer"
+              >
+                <td>{{ grow.name }}</td>
+                <td>{{ grow.type }}</td>
+                <td>{{ grow.start_date }}</td>
+                <td>{{ grow.end_date }}</td>
+                <td>{{ grow.updated_at|date:"M d, Y" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            {% else %}
+            <tbody>
+              <tr>
+                <td colspan="5" class="text-center text-muted">
+                  No grows found.
+                </td>
+              </tr>
+            </tbody>
+            {% endif %}
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Environments Section -->
+    <div class="col-xl-6 col-lg-12 mb-4">
+      <div class="card shadow-sm">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <span><i class="bi bi-body-text me-2"></i>Environments</span>
+          <div>
+            <a
+              href="{% url 'environments' %}"
+              class="btn btn-outline-secondary btn-sm"
+              >View all</a
+            >
+            <a href="/environment/add/" class="btn btn-primary btn-sm ms-2"
+              >Add New</a
+            >
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Grow</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            {% if environments %}
+            <tbody>
+              {% for environment in environments|slice:":5" %}
+              <tr
+                onclick="window.location='{% url 'environment' environment.id %}'"
+                style="cursor: pointer"
+              >
+                <td>{{ environment.name }}</td>
+                <td>{{ environment.type }}</td>
+                <td>{{ environment.location }}</td>
+                <td>{{ environment.grow }}</td>
+                <td>{{ environment.updated_at|date:"M d, Y" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            {% else %}
+            <tbody>
+              <tr>
+                <td colspan="5" class="text-center text-muted">
+                  No environments found.
+                </td>
+              </tr>
+            </tbody>
+            {% endif %}
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Groups Section -->
+    <div class="col-xl-6 col-lg-12 mb-4">
+      <div class="card shadow-sm">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <span><i class="bi bi-dribbble me-2"></i>Groups</span>
+          <div>
+            <a
+              href="{% url 'groups' %}"
+              class="btn btn-outline-secondary btn-sm"
+              >View all</a
+            >
+            <a href="/group/add/" class="btn btn-primary btn-sm ms-2"
+              >Add New</a
+            >
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            {% if groups %}
+            <tbody>
+              {% for group in groups|slice:":5" %}
+              <tr
+                onclick="window.location='{% url 'group' group.id %}'"
+                style="cursor: pointer"
+              >
+                <td>{{ group.name }}</td>
+                <td>{{ group.description|truncatechars:40 }}</td>
+                <td>{{ group.updated_at|date:"M d, Y" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            {% else %}
+            <tbody>
+              <tr>
+                <td colspan="3" class="text-center text-muted">
+                  No groups found.
+                </td>
+              </tr>
+            </tbody>
+            {% endif %}
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add more sections as needed, following the same card/table pattern -->
+  </div>
+</div>
+{% endblock %}
