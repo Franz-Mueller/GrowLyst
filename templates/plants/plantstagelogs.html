@@ -4,27 +4,27 @@
 {% block content %}
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>Groups</h5>
-        <a href="/group/add/" class="btn btn-primary">Add New</a>
+        <h5>Plant Stage Logs</h5>
+        <a href="/plantstagelog/add/" class="btn btn-primary">Add New</a>
     </div>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Name</th>
-<th scope="col">Description</th>
-<th scope="col">Created</th>
-<th scope="col">Updated</th>
+                <th scope="col">Plant</th>
+<th scope="col">Stage</th>
+<th scope="col">Date</th>
+<th scope="col">Notes</th>
                 <th scope="col">Updated at</th>
             </tr>
         </thead>
-        {% if groups %}
+        {% if plantstagelogs %}
         <tbody class="align-middle">
-        {% for item in groups %}
-            <tr class="table-row-link" onclick="window.location='{% url 'group' item.id %}'">
-                <td>{{ item.name }}</td>
-<td>{{ item.description }}</td>
-<td>{{ item.created_at }}</td>
-<td>{{ item.updated_at }}</td>
+        {% for item in plantstagelogs %}
+            <tr class="table-row-link" onclick="window.location='{% url 'plantstagelog' item.id %}'">
+                <td>{{ item.plant }}</td>
+<td>{{ item.stage }}</td>
+<td>{{ item.date }}</td>
+<td>{{ item.notes }}</td>
                 <td>{{ item.updated_at }}</td>
             </tr>
         {% endfor %}

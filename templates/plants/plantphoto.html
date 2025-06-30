@@ -1,0 +1,25 @@
+
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="container-fluid mt-4">
+        <div class="card p-4 shadow-lg" style="min-height: 60vh">
+            <h1 class="mb-1">{{ plantphoto.name|default:"Plant Photo" }}</h1>
+            <dl class="row mt-4">
+                <dt class="col-sm-3">Plant:</dt><dd class="col-sm-9">{{ plantphoto.plant }}</dd>
+<dt class="col-sm-3">Image:</dt><dd class="col-sm-9">{{ plantphoto.image }}</dd>
+<dt class="col-sm-3">Caption:</dt><dd class="col-sm-9">{{ plantphoto.caption }}</dd>
+<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ plantphoto.created_at }}</dd>
+            </dl>
+            <div class="text-muted mt-4">
+                <small>
+                    Created: {{ plantphoto.created_at|date:"M d, Y H:i" }}<br />
+                    Updated: {{ plantphoto.updated_at|date:"M d, Y H:i" }}
+                </small>
+            </div>
+            <a href="{% url 'plantphotos' %}" class="btn btn-outline-secondary mt-4">← Back to Plant Photos</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

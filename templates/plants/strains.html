@@ -4,27 +4,27 @@
 {% block content %}
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>Groups</h5>
-        <a href="/group/add/" class="btn btn-primary">Add New</a>
+        <h5>Strains</h5>
+        <a href="/strain/add/" class="btn btn-primary">Add New</a>
     </div>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">Name</th>
+<th scope="col">Breeder</th>
+<th scope="col">Type</th>
 <th scope="col">Description</th>
-<th scope="col">Created</th>
-<th scope="col">Updated</th>
                 <th scope="col">Updated at</th>
             </tr>
         </thead>
-        {% if groups %}
+        {% if strains %}
         <tbody class="align-middle">
-        {% for item in groups %}
-            <tr class="table-row-link" onclick="window.location='{% url 'group' item.id %}'">
+        {% for item in strains %}
+            <tr class="table-row-link" onclick="window.location='{% url 'strain' item.id %}'">
                 <td>{{ item.name }}</td>
+<td>{{ item.breeder }}</td>
+<td>{{ item.type }}</td>
 <td>{{ item.description }}</td>
-<td>{{ item.created_at }}</td>
-<td>{{ item.updated_at }}</td>
                 <td>{{ item.updated_at }}</td>
             </tr>
         {% endfor %}

@@ -4,8 +4,8 @@
 {% block content %}
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>Groups</h5>
-        <a href="/group/add/" class="btn btn-primary">Add New</a>
+        <h5>Nutrients</h5>
+        <a href="/nutrient/add/" class="btn btn-primary">Add New</a>
     </div>
     <table class="table">
         <thead>
@@ -17,10 +17,10 @@
                 <th scope="col">Updated at</th>
             </tr>
         </thead>
-        {% if groups %}
+        {% if nutrients %}
         <tbody class="align-middle">
-        {% for item in groups %}
-            <tr class="table-row-link" onclick="window.location='{% url 'group' item.id %}'">
+        {% for item in nutrients %}
+            <tr class="table-row-link" onclick="window.location='{% url 'nutrient' item.id %}'">
                 <td>{{ item.name }}</td>
 <td>{{ item.description }}</td>
 <td>{{ item.created_at }}</td>

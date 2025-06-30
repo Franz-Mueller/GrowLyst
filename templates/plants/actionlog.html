@@ -1,0 +1,26 @@
+
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="container-fluid mt-4">
+        <div class="card p-4 shadow-lg" style="min-height: 60vh">
+            <h1 class="mb-1">{{ actionlog.name|default:"Action Log" }}</h1>
+            <dl class="row mt-4">
+                <dt class="col-sm-3">Plant:</dt><dd class="col-sm-9">{{ actionlog.plant }}</dd>
+<dt class="col-sm-3">Type:</dt><dd class="col-sm-9">{{ actionlog.actiontype }}</dd>
+<dt class="col-sm-3">Date:</dt><dd class="col-sm-9">{{ actionlog.date }}</dd>
+<dt class="col-sm-3">Notes:</dt><dd class="col-sm-9">{{ actionlog.notes }}</dd>
+<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ actionlog.created_at }}</dd>
+            </dl>
+            <div class="text-muted mt-4">
+                <small>
+                    Created: {{ actionlog.created_at|date:"M d, Y H:i" }}<br />
+                    Updated: {{ actionlog.updated_at|date:"M d, Y H:i" }}
+                </small>
+            </div>
+            <a href="{% url 'actionlogs' %}" class="btn btn-outline-secondary mt-4">← Back to Action Logs</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
