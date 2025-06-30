@@ -7,6 +7,7 @@ from .models import *
 
 @login_required
 def plants(request):
+    """User Specific"""
     plants = Plant.objects.for_user(request.user)
     content = {"plants": plants, "section": "plants"}
     return render(request, "plants/plants.html", content)
@@ -22,6 +23,7 @@ def plant(request, plant_id):
 
 @login_required
 def grows(request):
+    """User Specific"""
     grows = Grow.objects.for_user(request.user)
     content = {"grows": grows, "section": "grows"}
     return render(request, "plants/grows.html", content)
@@ -36,6 +38,7 @@ def grow(request, grow_id):
 
 @login_required
 def environments(request):
+    """User Specific"""
     environments = Environment.objects.recent_for_user(request.user)
     content = {"environments": environments, "section": "environments"}
     return render(request, "plants/environments.html", content)
@@ -50,6 +53,7 @@ def environment(request, environment_id):
 
 @login_required
 def groups(request):
+    """User Specific"""
     groups = Group.objects.recent_for_user(request.user)
     content = {"groups": groups, "section": "groups"}
     return render(request, "plants/groups.html", content)
@@ -64,7 +68,8 @@ def group(request, group_id):
 
 @login_required
 def plantstages(request):
-    plantstages = Plantstage.objects.for_user(request.user)
+    """User Specific + Global"""
+    plantstages = Plantstage.objects.for_user_and_global(request.user)
     content = {"plantstages": plantstages, "section": "plantstages"}
     return render(request, "plants/plantstages.html", content)
 
@@ -78,6 +83,7 @@ def plantstage(request, plantstage_id):
 
 @login_required
 def plantstagelogs(request):
+    """User Specific"""
     plantstagelogs = Plantstagelog.objects.for_user(request.user)
     content = {"plantstagelogs": plantstagelogs, "section": "plantstagelogs"}
     return render(request, "plants/plantstagelogs.html", content)
@@ -92,7 +98,8 @@ def plantstagelog(request, plantstagelog_id):
 
 @login_required
 def strains(request):
-    strains = Strain.objects.for_user(request.user)
+    """User Specific + Global"""
+    strains = Strain.objects.for_user_and_global(request.user)
     content = {"strains": strains, "section": "strains"}
     return render(request, "plants/strains.html", content)
 
@@ -106,7 +113,8 @@ def strain(request, strain_id):
 
 @login_required
 def breeders(request):
-    breeders = Breeder.objects.for_user(request.user)
+    """User Specific + Global"""
+    breeders = Breeder.objects.for_user_and_global(request.user)
     content = {"breeders": breeders, "section": "breeders"}
     return render(request, "plants/breeders.html", content)
 
@@ -120,7 +128,8 @@ def breeder(request, breeder_id):
 
 @login_required
 def mediumtypes(request):
-    mediumtypes = Mediumtype.objects.for_user(request.user)
+    """User Specific + Global"""
+    mediumtypes = Mediumtype.objects.for_user_and_global(request.user)
     content = {"mediumtypes": mediumtypes, "section": "mediumtypes"}
     return render(request, "plants/mediumtypes.html", content)
 
@@ -134,7 +143,8 @@ def mediumtype(request, mediumtype_id):
 
 @login_required
 def media(request):
-    media = Medium.objects.for_user(request.user)
+    """User Specific + Global"""
+    media = Medium.objects.for_user_and_global(request.user)
     content = {"media": media, "section": "media"}
     return render(request, "plants/media.html", content)
 
@@ -148,6 +158,7 @@ def medium(request, medium_id):
 
 @login_required
 def plantphotos(request):
+    """User Specific"""
     plantphotos = Plantphoto.objects.for_user(request.user)
     content = {"plantphotos": plantphotos, "section": "plantphotos"}
     return render(request, "plants/plantphotos.html", content)
@@ -162,6 +173,7 @@ def plantphoto(request, plantphoto_id):
 
 @login_required
 def growtypes(request):
+    """User Specific"""
     growtypes = Growtype.objects.for_user(request.user)
     content = {"growtypes": growtypes, "section": "growtypes"}
     return render(request, "plants/growtypes.html", content)
@@ -175,21 +187,8 @@ def growtype(request, growtype_id):
 
 
 @login_required
-def environments_list(request):
-    environments = Environment.objects.for_user(request.user)
-    content = {"environments": environments, "section": "environments"}
-    return render(request, "plants/environments.html", content)
-
-
-@login_required
-def environment_detail(request, environment_id):
-    environment = Environment.objects.get(id=environment_id)
-    content = {"environment": environment}
-    return render(request, "plants/environment.html", content)
-
-
-@login_required
 def measurements(request):
+    """User Specific"""
     measurements = Measurement.objects.for_user(request.user)
     content = {"measurements": measurements, "section": "measurements"}
     return render(request, "plants/measurements.html", content)
@@ -204,7 +203,8 @@ def measurement(request, measurement_id):
 
 @login_required
 def units(request):
-    units = Unit.objects.for_user(request.user)
+    """User Specific + Global"""
+    units = Unit.objects.for_user_and_global(request.user)
     content = {"units": units, "section": "units"}
     return render(request, "plants/units.html", content)
 
@@ -218,7 +218,8 @@ def unit(request, unit_id):
 
 @login_required
 def unittypes(request):
-    unittypes = Unittype.objects.for_user(request.user)
+    """User Specific + Global"""
+    unittypes = Unittype.objects.for_user_and_global(request.user)
     content = {"unittypes": unittypes, "section": "unittypes"}
     return render(request, "plants/unittypes.html", content)
 
@@ -232,7 +233,8 @@ def unittype(request, unittype_id):
 
 @login_required
 def actioncategories(request):
-    actioncategories = Actioncategory.objects.for_user(request.user)
+    """User Specific + Global"""
+    actioncategories = Actioncategory.objects.for_user_and_global(request.user)
     content = {"actioncategories": actioncategories, "section": "actioncategories"}
     return render(request, "plants/actioncategories.html", content)
 
@@ -246,7 +248,8 @@ def actioncategory(request, actioncategory_id):
 
 @login_required
 def actiontypes(request):
-    actiontypes = Actiontype.objects.for_user(request.user)
+    """User Specific + Global"""
+    actiontypes = Actiontype.objects.for_user_and_global(request.user)
     content = {"actiontypes": actiontypes, "section": "actiontypes"}
     return render(request, "plants/actiontypes.html", content)
 
@@ -260,6 +263,7 @@ def actiontype(request, actiontype_id):
 
 @login_required
 def actionlogs(request):
+    """User Specific"""
     actionlogs = ActionLog.objects.for_user(request.user)
     content = {"actionlogs": actionlogs, "section": "actionlogs"}
     return render(request, "plants/actionlogs.html", content)
@@ -274,7 +278,8 @@ def actionlog(request, actionlog_id):
 
 @login_required
 def nutrients(request):
-    nutrients = Nutrient.objects.for_user(request.user)
+    """User Specific + Global"""
+    nutrients = Nutrient.objects.for_user_and_global(request.user)
     content = {"nutrients": nutrients, "section": "nutrients"}
     return render(request, "plants/nutrients.html", content)
 
@@ -288,6 +293,7 @@ def nutrient(request, nutrient_id):
 
 @login_required
 def nutritions(request):
+    """User Specific"""
     nutritions = Nutrition.objects.for_user(request.user)
     content = {"nutritions": nutritions, "section": "nutritions"}
     return render(request, "plants/nutritions.html", content)
@@ -302,7 +308,8 @@ def nutrition(request, nutrition_id):
 
 @login_required
 def measurementtypes(request):
-    measurementtypes = Measurementtype.objects.for_user(request.user)
+    """User Specific + Global"""
+    measurementtypes = Measurementtype.objects.for_user_and_global(request.user)
     content = {"measurementtypes": measurementtypes, "section": "measurementtypes"}
     return render(request, "plants/measurementtypes.html", content)
 

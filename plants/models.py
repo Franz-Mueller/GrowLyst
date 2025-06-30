@@ -86,16 +86,40 @@ For now we use the admin panel.
 """
 
 
-class PlantstageQuerySet(models.QuerySet): ...
+class PlantstageQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class PlantstageManager(models.Manager):
     def get_queryset(self):
         return PlantstageQuerySet(self.model, using=self._db)
 
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
+
 
 class Plantstage(models.Model):
     objects = PlantstageManager()
+    user = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="plantstages",
+        blank=True,
+        null=True,
+    )
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -114,12 +138,23 @@ TODO: Design and implement plant stage log logic
 """
 
 
-class PlantstagelogQuerySet(models.QuerySet): ...
+class PlantstagelogQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class PlantstagelogManager(models.Manager):
     def get_queryset(self):
         return PlantstagelogQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Plantstagelog(models.Model):
@@ -152,12 +187,29 @@ For now the user does not need to create custom strains.
 """
 
 
-class StrainQuerySet(models.QuerySet): ...
+class StrainQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class StrainManager(models.Manager):
     def get_queryset(self):
         return StrainQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Strain(models.Model):
@@ -190,12 +242,29 @@ class Strain(models.Model):
 
 
 # region Breeder
-class BreederQuerySet(models.QuerySet): ...
+class BreederQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class BreederManager(models.Manager):
     def get_queryset(self):
         return BreederQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Breeder(models.Model):
@@ -222,12 +291,29 @@ class Breeder(models.Model):
 
 
 # region Mediumtype
-class MediumtypeQuerySet(models.QuerySet): ...
+class MediumtypeQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class MediumtypeManager(models.Manager):
     def get_queryset(self):
         return MediumtypeQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Mediumtype(models.Model):
@@ -252,12 +338,29 @@ class Mediumtype(models.Model):
 
 
 # region Medium
-class MediumQuerySet(models.QuerySet): ...
+class MediumQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class MediumManager(models.Manager):
     def get_queryset(self):
         return MediumQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Medium(models.Model):
@@ -289,12 +392,23 @@ class Medium(models.Model):
 
 
 # region Plantphoto
-class PlantphotoQuerySet(models.QuerySet): ...
+class PlantphotoQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class PlantphotoManager(models.Manager):
     def get_queryset(self):
         return PlantphotoQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Plantphoto(models.Model):
@@ -445,12 +559,23 @@ class Environment(models.Model):
 
 
 # region Measurement
-class MeasurementQuerySet(models.QuerySet): ...
+class MeasurementQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class MeasurementManager(models.Manager):
     def get_queryset(self):
         return MeasurementQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Measurement(models.Model):
@@ -512,12 +637,29 @@ class Measurement(models.Model):
 
 
 # region Unit
-class UnitQuerySet(models.QuerySet): ...
+class UnitQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class UnitManager(models.Manager):
     def get_queryset(self):
         return UnitQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Unit(models.Model):
@@ -543,12 +685,29 @@ class Unit(models.Model):
 
 
 # region Unittype
-class UnittypeQuerySet(models.QuerySet): ...
+class UnittypeQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class UnittypeManager(models.Manager):
     def get_queryset(self):
         return UnittypeQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Unittype(models.Model):
@@ -579,12 +738,29 @@ class Unittype(models.Model):
 
 # endregion Unittype
 # region Actioncategory
-class ActioncategoryQuerySet(models.QuerySet): ...
+class ActioncategoryQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class ActioncategoryManager(models.Manager):
     def get_queryset(self):
         return ActioncategoryQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Actioncategory(models.Model):
@@ -610,12 +786,29 @@ class Actioncategory(models.Model):
 
 
 # region Actiontype
-class ActiontypeQuerySet(models.QuerySet): ...
+class ActiontypeQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class ActiontypeManager(models.Manager):
     def get_queryset(self):
         return ActiontypeQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Actiontype(models.Model):
@@ -648,12 +841,23 @@ class Actiontype(models.Model):
 
 
 # region ActionLog
-class ActionLogQuerySet(models.QuerySet): ...
+class ActionLogQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class ActionLogManager(models.Manager):
     def get_queryset(self):
         return ActionLogQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class ActionLog(models.Model):
@@ -709,12 +913,29 @@ class ActionLog(models.Model):
 
 
 # region Nutrient
-class NutrientQuerySet(models.QuerySet): ...
+class NutrientQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class NutrientManager(models.Manager):
     def get_queryset(self):
         return NutrientQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Nutrient(models.Model):
@@ -742,12 +963,23 @@ class Nutrient(models.Model):
 
 
 # region Nutrition
-class NutritionQuerySet(models.QuerySet): ...
+class NutritionQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
 
 
 class NutritionManager(models.Manager):
     def get_queryset(self):
         return NutritionQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
 
 
 class Nutrition(models.Model):
@@ -824,12 +1056,29 @@ class Group(models.Model):  # TODO maybe rework so it is not assigned to grow an
 
 # endregion Group
 # region Measurementtype
-class MeasurementtypeQuerySet(models.QuerySet): ...
+class MeasurementtypeQuerySet(models.QuerySet):
+    def recent(self):
+        return self.order_by("-updated_at")
+
+    def for_user(self, user):
+        return self.filter(user=user)
+
+    def for_user_and_global(self, user):
+        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
 
 
 class MeasurementtypeManager(models.Manager):
     def get_queryset(self):
         return MeasurementtypeQuerySet(self.model, using=self._db)
+
+    def for_user(self, user):
+        return self.get_queryset().for_user(user)
+
+    def recent_for_user(self, user, limit=3):
+        return self.get_queryset().for_user(user).recent()[:limit]
+
+    def for_user_and_global(self, user):
+        return self.get_queryset().for_user_and_global(user)
 
 
 class Measurementtype(models.Model):
