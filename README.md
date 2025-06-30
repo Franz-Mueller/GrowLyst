@@ -5,6 +5,7 @@ Nächste Anpassungen:
 
 **MVP zum testen**
 
+- query zum user retrieven testen
 - Add einbauen
 - Edit einbauen
 - Filter / Sortierer auf Tabellen
