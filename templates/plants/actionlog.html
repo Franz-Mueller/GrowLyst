@@ -1,26 +1,43 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <div class="container mt-4">
-    <div class="container-fluid mt-4">
-        <div class="card p-4 shadow-lg" style="min-height: 60vh">
-            <h1 class="mb-1">{{ actionlog.name|default:"Action Log" }}</h1>
-            <dl class="row mt-4">
-                <dt class="col-sm-3">Plant:</dt><dd class="col-sm-9">{{ actionlog.plant }}</dd>
-<dt class="col-sm-3">Type:</dt><dd class="col-sm-9">{{ actionlog.actiontype }}</dd>
-<dt class="col-sm-3">Date:</dt><dd class="col-sm-9">{{ actionlog.date }}</dd>
-<dt class="col-sm-3">Notes:</dt><dd class="col-sm-9">{{ actionlog.notes }}</dd>
-<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ actionlog.created_at }}</dd>
-            </dl>
-            <div class="text-muted mt-4">
-                <small>
-                    Created: {{ actionlog.created_at|date:"M d, Y H:i" }}<br />
-                    Updated: {{ actionlog.updated_at|date:"M d, Y H:i" }}
-                </small>
-            </div>
-            <a href="{% url 'actionlogs' %}" class="btn btn-outline-secondary mt-4">← Back to Action Logs</a>
+  <div class="container-fluid mt-4">
+    <div class="card p-4 shadow-lg" style="min-height: 70vh">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary">Edit</button>
+      </div>
+      <div class="row g-4 align-items-center">
+        
+        <div class="col">
+          <h1 class="mb-1">{{ actionlog.name }}</h1>
+          <p class="mb-1"><strong>Grow:</strong> {{ actionlog.grow }}</p><p class="mb-1"><strong>Environment:</strong> {{ actionlog.environment }}</p><p class="mb-1"><strong>Plant:</strong> {{ actionlog.plant }}</p><p class="mb-1"><strong>Category:</strong> {{ actionlog.Actioncategory }}</p><p class="mb-1"><strong>Type:</strong> {{ actionlog.action_type }}</p>
+          <div id="desc-container-{{ actionlog.id }}">
+            <span id="desc-preview-{{ actionlog.id }}">
+              <strong>Description: </strong>
+              {{ actionlog.description|truncatechars:100 }}
+              {% if actionlog.description|length > 100 %} ...
+              <a href="javascript:void(0);" onclick="showFullDesc({{ actionlog.id }})">Show more</a>
+              {% endif %}
+            </span>
+            <span id="desc-full-{{ actionlog.id }}" style="display: none">
+              <strong>Description: </strong>{{ actionlog.description|linebreaksbr }}
+              <a href="javascript:void(0);" onclick="showPreviewDesc({{ actionlog.id }})">Show less</a>
+            </span>
+          </div>
+          <script>
+            function showFullDesc(id) {
+              document.getElementById("desc-preview-" + id).style.display = "none";
+              document.getElementById("desc-full-" + id).style.display = "";
+            }
+            function showPreviewDesc(id) {
+              document.getElementById("desc-full-" + id).style.display = "none";
+              document.getElementById("desc-preview-" + id).style.display = "";
+            }
+          </script>
+            <div class="text-muted mt-2"><small>Created: {{ actionlog.created_at|date:"M d, Y H:i" }}</small></div><div class="text-muted mt-2"><small>Updated: {{ actionlog.updated_at|date:"M d, Y H:i" }}</small></div>
+          <a href="{% url 'actionlogs' %}" class="btn btn-outline-secondary mt-4">&larr; Back</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

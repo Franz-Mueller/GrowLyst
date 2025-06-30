@@ -1,25 +1,49 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <div class="container mt-4">
-    <div class="container-fluid mt-4">
-        <div class="card p-4 shadow-lg" style="min-height: 60vh">
-            <h1 class="mb-1">{{ plantphoto.name|default:"Plant Photo" }}</h1>
-            <dl class="row mt-4">
-                <dt class="col-sm-3">Plant:</dt><dd class="col-sm-9">{{ plantphoto.plant }}</dd>
-<dt class="col-sm-3">Image:</dt><dd class="col-sm-9">{{ plantphoto.image }}</dd>
-<dt class="col-sm-3">Caption:</dt><dd class="col-sm-9">{{ plantphoto.caption }}</dd>
-<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ plantphoto.created_at }}</dd>
-            </dl>
-            <div class="text-muted mt-4">
-                <small>
-                    Created: {{ plantphoto.created_at|date:"M d, Y H:i" }}<br />
-                    Updated: {{ plantphoto.updated_at|date:"M d, Y H:i" }}
-                </small>
-            </div>
-            <a href="{% url 'plantphotos' %}" class="btn btn-outline-secondary mt-4">← Back to Plant Photos</a>
+  <div class="container-fluid mt-4">
+    <div class="card p-4 shadow-lg" style="min-height: 70vh">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary">Edit</button>
+      </div>
+      <div class="row g-4 align-items-center">
+        
+      <div class="col-auto">
+        {% if plantphoto.image %}
+        <img src="{{ plantphoto.image.url }}" class="rounded-circle border" alt="" style="width:140px;height:140px;object-fit:contain;background:#f8f9fa;" />
+        {% endif %}
+      </div>
+      
+        <div class="col">
+          <h1 class="mb-1">{{ plantphoto.name }}</h1>
+          <p class="mb-1"><strong>Plant:</strong> {{ plantphoto.plant }}</p>
+          <div id="desc-container-{{ plantphoto.id }}">
+            <span id="desc-preview-{{ plantphoto.id }}">
+              <strong>Description: </strong>
+              {{ plantphoto.description|truncatechars:100 }}
+              {% if plantphoto.description|length > 100 %} ...
+              <a href="javascript:void(0);" onclick="showFullDesc({{ plantphoto.id }})">Show more</a>
+              {% endif %}
+            </span>
+            <span id="desc-full-{{ plantphoto.id }}" style="display: none">
+              <strong>Description: </strong>{{ plantphoto.description|linebreaksbr }}
+              <a href="javascript:void(0);" onclick="showPreviewDesc({{ plantphoto.id }})">Show less</a>
+            </span>
+          </div>
+          <script>
+            function showFullDesc(id) {
+              document.getElementById("desc-preview-" + id).style.display = "none";
+              document.getElementById("desc-full-" + id).style.display = "";
+            }
+            function showPreviewDesc(id) {
+              document.getElementById("desc-full-" + id).style.display = "none";
+              document.getElementById("desc-preview-" + id).style.display = "";
+            }
+          </script>
+            <div class="text-muted mt-2"><small>Created: {{ plantphoto.created_at|date:"M d, Y H:i" }}</small></div><div class="text-muted mt-2"><small>Updated: {{ plantphoto.updated_at|date:"M d, Y H:i" }}</small></div>
+          <a href="{% url 'plantphotos' %}" class="btn btn-outline-secondary mt-4">&larr; Back</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

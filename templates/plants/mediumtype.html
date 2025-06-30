@@ -1,24 +1,43 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <div class="container mt-4">
-    <div class="container-fluid mt-4">
-        <div class="card p-4 shadow-lg" style="min-height: 60vh">
-            <h1 class="mb-1">{{ mediumtype.name|default:"Medium Type" }}</h1>
-            <dl class="row mt-4">
-                <dt class="col-sm-3">Description:</dt><dd class="col-sm-9">{{ mediumtype.description }}</dd>
-<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ mediumtype.created_at }}</dd>
-<dt class="col-sm-3">Updated:</dt><dd class="col-sm-9">{{ mediumtype.updated_at }}</dd>
-            </dl>
-            <div class="text-muted mt-4">
-                <small>
-                    Created: {{ mediumtype.created_at|date:"M d, Y H:i" }}<br />
-                    Updated: {{ mediumtype.updated_at|date:"M d, Y H:i" }}
-                </small>
-            </div>
-            <a href="{% url 'mediumtypes' %}" class="btn btn-outline-secondary mt-4">← Back to Medium Types</a>
+  <div class="container-fluid mt-4">
+    <div class="card p-4 shadow-lg" style="min-height: 70vh">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary">Edit</button>
+      </div>
+      <div class="row g-4 align-items-center">
+        
+        <div class="col">
+          <h1 class="mb-1">{{ mediumtype.name }}</h1>
+          <p class="mb-1"><strong>Name:</strong> {{ mediumtype.name }}</p>
+          <div id="desc-container-{{ mediumtype.id }}">
+            <span id="desc-preview-{{ mediumtype.id }}">
+              <strong>Description: </strong>
+              {{ mediumtype.description|truncatechars:100 }}
+              {% if mediumtype.description|length > 100 %} ...
+              <a href="javascript:void(0);" onclick="showFullDesc({{ mediumtype.id }})">Show more</a>
+              {% endif %}
+            </span>
+            <span id="desc-full-{{ mediumtype.id }}" style="display: none">
+              <strong>Description: </strong>{{ mediumtype.description|linebreaksbr }}
+              <a href="javascript:void(0);" onclick="showPreviewDesc({{ mediumtype.id }})">Show less</a>
+            </span>
+          </div>
+          <script>
+            function showFullDesc(id) {
+              document.getElementById("desc-preview-" + id).style.display = "none";
+              document.getElementById("desc-full-" + id).style.display = "";
+            }
+            function showPreviewDesc(id) {
+              document.getElementById("desc-full-" + id).style.display = "none";
+              document.getElementById("desc-preview-" + id).style.display = "";
+            }
+          </script>
+            <div class="text-muted mt-2"><small>Created: {{ mediumtype.created_at|date:"M d, Y H:i" }}</small></div><div class="text-muted mt-2"><small>Updated: {{ mediumtype.updated_at|date:"M d, Y H:i" }}</small></div>
+          <a href="{% url 'mediumtypes' %}" class="btn btn-outline-secondary mt-4">&larr; Back</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

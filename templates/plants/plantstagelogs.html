@@ -1,44 +1,26 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>Plant Stage Logs</h5>
-        <a href="/plantstagelog/add/" class="btn btn-primary">Add New</a>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Plant</th>
-<th scope="col">Stage</th>
-<th scope="col">Date</th>
-<th scope="col">Notes</th>
-                <th scope="col">Updated at</th>
-            </tr>
-        </thead>
-        {% if plantstagelogs %}
-        <tbody class="align-middle">
-        {% for item in plantstagelogs %}
-            <tr class="table-row-link" onclick="window.location='{% url 'plantstagelog' item.id %}'">
-                <td>{{ item.plant }}</td>
-<td>{{ item.stage }}</td>
-<td>{{ item.date }}</td>
-<td>{{ item.notes }}</td>
-                <td>{{ item.updated_at }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        {% endif %}
-    </table>
-</div>
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <style>
-.table-row-link {
-    cursor: pointer;
-    transition: background 0.1s;
-}
-.table-row-link:hover {
-    background: #f1f3f4;
-}
+  .table-row-link { cursor: pointer; transition: background 0.1s; }
+  .table-row-link:hover { background: #f1f3f4; }
 </style>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="mb-0">Plantstagelogs</h5>
+  <button class="btn btn-primary">Create new</button>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Plant</th><th scope="col">Stage</th><th scope="col">Date of Change</th><th scope="col">Created</th><th scope="col">Updated</th>
+    </tr>
+  </thead>
+  {% if plantstagelogs %}
+  <tbody class="align-middle">
+    {% for plantstagelog in plantstagelogs %}
+    <tr class="table-row-link" onclick="window.location='{% url 'plantstagelog' plantstagelog.id %}'">
+      <td>{{ plantstagelog.plant }}</td><td>{{ plantstagelog.plantstage }}</td><td>{{ plantstagelog.date_of_change|date:"M d, Y H:i" }}</td><td>{{ plantstagelog.created_at|date:"M d, Y H:i" }}</td><td>{{ plantstagelog.updated_at|date:"M d, Y H:i" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% endif %}
+</table>
 {% endblock content %}

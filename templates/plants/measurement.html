@@ -1,26 +1,19 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <div class="container mt-4">
-    <div class="container-fluid mt-4">
-        <div class="card p-4 shadow-lg" style="min-height: 60vh">
-            <h1 class="mb-1">{{ measurement.name|default:"Measurement" }}</h1>
-            <dl class="row mt-4">
-                <dt class="col-sm-3">Plant:</dt><dd class="col-sm-9">{{ measurement.plant }}</dd>
-<dt class="col-sm-3">Type:</dt><dd class="col-sm-9">{{ measurement.measurementtype }}</dd>
-<dt class="col-sm-3">Value:</dt><dd class="col-sm-9">{{ measurement.value }}</dd>
-<dt class="col-sm-3">Unit:</dt><dd class="col-sm-9">{{ measurement.unit }}</dd>
-<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ measurement.created_at }}</dd>
-            </dl>
-            <div class="text-muted mt-4">
-                <small>
-                    Created: {{ measurement.created_at|date:"M d, Y H:i" }}<br />
-                    Updated: {{ measurement.updated_at|date:"M d, Y H:i" }}
-                </small>
-            </div>
-            <a href="{% url 'measurements' %}" class="btn btn-outline-secondary mt-4">← Back to Measurements</a>
+  <div class="container-fluid mt-4">
+    <div class="card p-4 shadow-lg" style="min-height: 70vh">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary">Edit</button>
+      </div>
+      <div class="row g-4 align-items-center">
+        
+        <div class="col">
+          <h1 class="mb-1">{{ measurement.name }}</h1>
+          <p class="mb-1"><strong>Grow:</strong> {{ measurement.grow }}</p><p class="mb-1"><strong>Environment:</strong> {{ measurement.environment }}</p><p class="mb-1"><strong>Plant:</strong> {{ measurement.plant }}</p><p class="mb-1"><strong>Type:</strong> {{ measurement.measurementtype }}</p><p class="mb-1"><strong>Value:</strong> {{ measurement.value }}</p><p class="mb-1"><strong>Unit:</strong> {{ measurement.unit }}</p><div class="text-muted mt-2"><small>Created: {{ measurement.created_at|date:"M d, Y H:i" }}</small></div><div class="text-muted mt-2"><small>Updated: {{ measurement.updated_at|date:"M d, Y H:i" }}</small></div>
+          <a href="{% url 'measurements' %}" class="btn btn-outline-secondary mt-4">&larr; Back</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

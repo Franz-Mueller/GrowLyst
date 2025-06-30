@@ -1,44 +1,26 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>Strains</h5>
-        <a href="/strain/add/" class="btn btn-primary">Add New</a>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-<th scope="col">Breeder</th>
-<th scope="col">Type</th>
-<th scope="col">Description</th>
-                <th scope="col">Updated at</th>
-            </tr>
-        </thead>
-        {% if strains %}
-        <tbody class="align-middle">
-        {% for item in strains %}
-            <tr class="table-row-link" onclick="window.location='{% url 'strain' item.id %}'">
-                <td>{{ item.name }}</td>
-<td>{{ item.breeder }}</td>
-<td>{{ item.type }}</td>
-<td>{{ item.description }}</td>
-                <td>{{ item.updated_at }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        {% endif %}
-    </table>
-</div>
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <style>
-.table-row-link {
-    cursor: pointer;
-    transition: background 0.1s;
-}
-.table-row-link:hover {
-    background: #f1f3f4;
-}
+  .table-row-link { cursor: pointer; transition: background 0.1s; }
+  .table-row-link:hover { background: #f1f3f4; }
 </style>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="mb-0">Strains</h5>
+  <button class="btn btn-primary">Create new</button>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th><th scope="col">Breeder</th><th scope="col">Description</th><th scope="col">Created</th><th scope="col">Updated</th>
+    </tr>
+  </thead>
+  {% if strains %}
+  <tbody class="align-middle">
+    {% for strain in strains %}
+    <tr class="table-row-link" onclick="window.location='{% url 'strain' strain.id %}'">
+      <td>{{ strain.name }}</td><td>{{ strain.breeder }}</td><td>{{ strain.description|truncatechars:40 }}</td><td>{{ strain.created_at|date:"M d, Y H:i" }}</td><td>{{ strain.updated_at|date:"M d, Y H:i" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% endif %}
+</table>
 {% endblock content %}

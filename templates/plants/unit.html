@@ -1,25 +1,19 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <div class="container mt-4">
-    <div class="container-fluid mt-4">
-        <div class="card p-4 shadow-lg" style="min-height: 60vh">
-            <h1 class="mb-1">{{ unit.name|default:"Unit" }}</h1>
-            <dl class="row mt-4">
-                <dt class="col-sm-3">Abbreviation:</dt><dd class="col-sm-9">{{ unit.abbreviation }}</dd>
-<dt class="col-sm-3">Unit Type:</dt><dd class="col-sm-9">{{ unit.unittype }}</dd>
-<dt class="col-sm-3">Created:</dt><dd class="col-sm-9">{{ unit.created_at }}</dd>
-<dt class="col-sm-3">Updated:</dt><dd class="col-sm-9">{{ unit.updated_at }}</dd>
-            </dl>
-            <div class="text-muted mt-4">
-                <small>
-                    Created: {{ unit.created_at|date:"M d, Y H:i" }}<br />
-                    Updated: {{ unit.updated_at|date:"M d, Y H:i" }}
-                </small>
-            </div>
-            <a href="{% url 'units' %}" class="btn btn-outline-secondary mt-4">← Back to Units</a>
+  <div class="container-fluid mt-4">
+    <div class="card p-4 shadow-lg" style="min-height: 70vh">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary">Edit</button>
+      </div>
+      <div class="row g-4 align-items-center">
+        
+        <div class="col">
+          <h1 class="mb-1">{{ unit.name }}</h1>
+          <p class="mb-1"><strong>Name:</strong> {{ unit.name }}</p><p class="mb-1"><strong>Symbol:</strong> {{ unit.symbol }}</p><p class="mb-1"><strong>Conversion Factor:</strong> {{ unit.conversion_factor_to_base }}</p><div class="text-muted mt-2"><small>Created: {{ unit.created_at|date:"M d, Y H:i" }}</small></div><div class="text-muted mt-2"><small>Updated: {{ unit.updated_at|date:"M d, Y H:i" }}</small></div>
+          <a href="{% url 'units' %}" class="btn btn-outline-secondary mt-4">&larr; Back</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

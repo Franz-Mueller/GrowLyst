@@ -1,44 +1,26 @@
-
-{% extends "dashboard_base.html" %}
-{% load static %}
-{% block content %}
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>Nutritions</h5>
-        <a href="/nutrition/add/" class="btn btn-primary">Add New</a>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Plant</th>
-<th scope="col">Nutrient</th>
-<th scope="col">Amount</th>
-<th scope="col">Unit</th>
-                <th scope="col">Updated at</th>
-            </tr>
-        </thead>
-        {% if nutritions %}
-        <tbody class="align-middle">
-        {% for item in nutritions %}
-            <tr class="table-row-link" onclick="window.location='{% url 'nutrition' item.id %}'">
-                <td>{{ item.plant }}</td>
-<td>{{ item.nutrient }}</td>
-<td>{{ item.amount }}</td>
-<td>{{ item.unit }}</td>
-                <td>{{ item.updated_at }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        {% endif %}
-    </table>
-</div>
+{% extends "dashboard_base.html" %} {% load static %} {% block content %}
 <style>
-.table-row-link {
-    cursor: pointer;
-    transition: background 0.1s;
-}
-.table-row-link:hover {
-    background: #f1f3f4;
-}
+  .table-row-link { cursor: pointer; transition: background 0.1s; }
+  .table-row-link:hover { background: #f1f3f4; }
 </style>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="mb-0">Nutritions</h5>
+  <button class="btn btn-primary">Create new</button>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Action Log</th><th scope="col">Nutrient</th><th scope="col">Amount</th><th scope="col">Unit</th><th scope="col">Created</th><th scope="col">Updated</th>
+    </tr>
+  </thead>
+  {% if nutritions %}
+  <tbody class="align-middle">
+    {% for nutrition in nutritions %}
+    <tr class="table-row-link" onclick="window.location='{% url 'nutrition' nutrition.id %}'">
+      <td>{{ nutrition.actionlog }}</td><td>{{ nutrition.nutrient }}</td><td>{{ nutrition.amount }}</td><td>{{ nutrition.unit }}</td><td>{{ nutrition.created_at|date:"M d, Y H:i" }}</td><td>{{ nutrition.updated_at|date:"M d, Y H:i" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% endif %}
+</table>
 {% endblock content %}
