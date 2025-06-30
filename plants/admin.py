@@ -20,5 +20,5 @@ admin.site.register(Actiontype)  # TODO
 admin.site.register(ActionLog)  # TODO
 admin.site.register(Nutrient)  # TODO
 admin.site.register(Nutrition)  # TODO
-admin.site.register(Group)  # TODO
+admin.site.register(Group)
 admin.site.register(Measurementtype)  # TODO
