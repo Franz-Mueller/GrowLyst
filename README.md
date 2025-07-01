@@ -8,13 +8,17 @@ Nächste Anpassungen:
 - ~~query zum user and global retrieven testen~~
 - ~~Add einbauen für Plants~~
 - ~~Edit einbauen für Plant~~
-- Bessere template struktur (weniger wiederholung)
-- Bessere codestruktur
-- Visual Redesign / neue queries um mehr anzuzeigen (z.b measurements auf plant card)
+- ~~Bessere template struktur (weniger wiederholung)~~
+  - ~~Lists~~
+  - ~~Cards~~
+- ~~Bessere codestruktur~~
+- Visual Redesign
 
 **verbessern**
 
 - Testing
+- neue queries um mehr anzuzeigen (z.b measurements auf plant card)
 - Filter / Sortierer auf Tabellen
 - Verhindern das user auf fremde daten zugreifen
 - Adden von Graphen / Auswertungen
+- Großes Code Rework, BC orientierte Mechaniken

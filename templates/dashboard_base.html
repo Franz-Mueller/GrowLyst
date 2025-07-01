@@ -96,70 +96,8 @@
     </nav>
     <div class="container-fluid">
       <div class="row min-vh-100">
-        <!-- Sidebar -->
-        <nav class="col-md-2 d-none d-md-block bg-dark sidebar py-4">
-          <div class="position-sticky">
-            <a
-              href="/"
-              class="d-flex align-items-center mb-3 text-white text-decoration-none ps-3"
-            >
-              <span class="fs-4 fw-bold">GrowLyst</span>
-            </a>
-            <hr class="text-secondary" />
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a
-                  href="/"
-                  class="nav-link text-white {% if section == 'dashboard' %}active bg-primary{% endif %}"
-                >
-                  <i class="bi bi-house me-2"></i> Dashboard
-                </a>
-              </li>
-              <li class="nav-item">
-                <a
-                  href="/plants"
-                  class="nav-link text-white {% if section == 'plants' %}active bg-primary{% endif %}"
-                >
-                  <i class="bi bi-flower1 me-2"></i> Plants
-                </a>
-              </li>
-              <!-- Add more sections as needed -->
-            </ul>
-            <hr class="text-secondary" />
-            <div class="dropdown ps-3">
-              <a
-                href="#"
-                class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <img
-                  src="https://github.com/mdo.png"
-                  alt="Profile"
-                  width="32"
-                  height="32"
-                  class="rounded-circle me-2"
-                />
-                <strong>{{ user.username|default:"User" }}</strong>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="{% url 'logout' %}"
-                    >Sign out</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
         <!-- Main Content -->
-        <main class="col-md-10 ms-sm-auto px-md-4 py-4">
-          {% block content %}{% endblock %}
-        </main>
+        <main class="container">{% block content %}{% endblock %}</main>
         <!-- Footer -->
         <div class="container">
           <footer

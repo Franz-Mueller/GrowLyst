@@ -1,17 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .extra_views.table_views import *
 from .models import *
 from .forms import PlantForm
-
-
-@login_required
-def plants(request):
-    """User Specific"""
-    plants = Plant.objects.for_user(request.user)
-    content = {"plants": plants, "section": "plants"}
-    return render(request, "plants/plants.html", content)
+from .extra_views.card_views import *
+from .extra_views.add_update_views import *
 
 
 @login_required
@@ -19,7 +13,7 @@ def plant(request, plant_id):
     plant = Plant.objects.get(id=plant_id)
     measurements = Measurement.objects.filter(user=request.user, plant=plant)
     content = {"plant": plant, "measurements": measurements}
-    return render(request, "plants/plant.html", content)
+    return render(request, "plants/plants/plant.html", content)
 
 
 @login_required
@@ -34,7 +28,7 @@ def add_plant(request):
             return redirect(f"/plant/{plant.id}")
     else:
         form = PlantForm()
-    return render(request, "plants/add_plant.html", {"form": form})
+    return render(request, "plants/plants/add_plant.html", {"form": form})
 
 
 @login_required
@@ -47,7 +41,9 @@ def edit_plant(request, plant_id):
             return redirect(f"/plant/{plant.id}")
     else:
         form = PlantForm(instance=plant)
-    return render(request, "plants/edit_plant.html", {"form": form, "plant": plant})
+    return render(
+        request, "plants/plants/edit_plant.html", {"form": form, "plant": plant}
+    )
 
 
 @login_required
