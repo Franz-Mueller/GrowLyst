@@ -1,0 +1,9 @@
+{% extends 'dashboard_base.html' %}{% load bootstrap5 %} {% block content %}
+<div class="container mt-5">
+  <h2>Add New Plant</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %} {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary">Add Plant</button>
+  </form>
+</div>
+{% endblock %}

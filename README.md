@@ -5,15 +5,16 @@ Nächste Anpassungen:
 
 **MVP zum testen**
 
-- query zum user and global retrieven testen
-- Add einbauen
-- Edit einbauen
-- Filter / Sortierer auf Tabellen
+- ~~query zum user and global retrieven testen~~
+- ~~Add einbauen für Plants~~
+- ~~Edit einbauen für Plant~~
+- Bessere template struktur (weniger wiederholung)
+- Bessere codestruktur
 - Visual Redesign / neue queries um mehr anzuzeigen (z.b measurements auf plant card)
 
 **verbessern**
 
 - Testing
+- Filter / Sortierer auf Tabellen
 - Verhindern das user auf fremde daten zugreifen
-- massives rework für bessere struktur
 - Adden von Graphen / Auswertungen

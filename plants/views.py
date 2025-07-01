@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 from .models import *
+from .forms import PlantForm
 
 
 @login_required
@@ -19,6 +20,34 @@ def plant(request, plant_id):
     measurements = Measurement.objects.filter(user=request.user, plant=plant)
     content = {"plant": plant, "measurements": measurements}
     return render(request, "plants/plant.html", content)
+
+
+@login_required
+def add_plant(request):
+
+    if request.method == "POST":
+        form = PlantForm(request.POST, request.FILES)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.user = request.user
+            plant.save()
+            return redirect(f"/plant/{plant.id}")
+    else:
+        form = PlantForm()
+    return render(request, "plants/add_plant.html", {"form": form})
+
+
+@login_required
+def edit_plant(request, plant_id):
+    plant = get_object_or_404(Plant, id=plant_id, user=request.user)
+    if request.method == "POST":
+        form = PlantForm(request.POST, request.FILES, instance=plant)
+        if form.is_valid():
+            form.save()
+            return redirect(f"/plant/{plant.id}")
+    else:
+        form = PlantForm(instance=plant)
+    return render(request, "plants/edit_plant.html", {"form": form, "plant": plant})
 
 
 @login_required
