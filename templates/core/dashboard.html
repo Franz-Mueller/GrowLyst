@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static extras %}
+{% get_media_prefix as MEDIA_URL %}
+{% load bootstrap5 %}
+{% block subnav %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'plants' %}">Plants</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'environments' %}">Environments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'grows' %}">Grows</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data Management</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="{% url 'mediumtypes' %}">Mediumtypes</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'mediums' %}">Mediums</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'growtypes' %}">Growtypes</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'unittypes' %}">Unittypes</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'units' %}">Units</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'actioncategories' %}">Actioncategories</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'actiontypes' %}">Actiontypes</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'nutrients' %}">Nutirents</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'groups' %}">Groups</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'measurementtypes' %}">Measurementtypes</a>
+              </li>
+              <!-- Add Custom Strains + Breeders -->
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endblock %}
+{% block content %}
+
+{% endblock %}

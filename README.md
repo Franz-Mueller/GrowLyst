@@ -22,3 +22,12 @@ Nächste Anpassungen:
 - Verhindern das user auf fremde daten zugreifen
 - Adden von Graphen / Auswertungen
 - Großes Code Rework, BC orientierte Mechaniken
+
+
+### colors
+- #DE7CC6
+- #7CDEDC
+- #DFCE7D
+- #89867A
+- #5E4658
+- #465E5E

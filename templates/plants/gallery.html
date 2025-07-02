@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% load static %} {% load bootstrap5 %}
+{% block subnav %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white mb-3">
+    <div class="container-fluid px-0">
+      <h2>{{ model_verbose }}</h2>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="{% url add_url_name %}" class="btn btn-primary">Add New</a>
+        </li>
+        <!-- Add more links as needed -->
+      </ul>
+    </div>
+  </nav>
+{% endblock %}
+{% block content %}
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for row in rows %}
+      <div class="col">
+        <div class="card shadow-sm">
+          <img src="{{ row.image.url }}" class="card-img-top" alt="{{ row.description }}" style="height:225px; object-fit:cover; width:100%;" />
+          <div class="card-body">
+            <p class="card-text">{{ row.description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a href="{{ row.image.url }}" class="btn btn-sm btn-outline-secondary">View</a> <a href="{% url 'edit_plantphoto' row.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+              </div>
+              <small class="text-body-secondary">{{ row.created_at }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No items found.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

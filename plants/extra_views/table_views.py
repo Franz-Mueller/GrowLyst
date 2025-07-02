@@ -19,6 +19,11 @@ class TableListView(LoginRequiredMixin, ListView):
         context["image_fields"] = getattr(self, "image_fields", [])
         context["page_url"] = self.page_url
         context["add_url_name"] = self.add_url_name
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -124,15 +129,6 @@ class MediumListView(TableListView):
     image_fields = []
     page_url = "medium"
     add_url_name = "add_medium"
-
-
-class PlantphotoListView(TableListView):
-    model = Plantphoto
-    table_captions = ["Image", "Plant", "Description", "Created At", "Updated At"]
-    table_fields = ["image", "plant__name", "description", "created_at", "updated_at"]
-    image_fields = ["image"]
-    page_url = "plantphoto"
-    add_url_name = "add_plantphoto"
 
 
 class GrowListView(TableListView):

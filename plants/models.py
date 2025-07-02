@@ -410,6 +410,9 @@ class PlantphotoManager(models.Manager):
     def recent_for_user(self, user, limit=3):
         return self.get_queryset().for_user(user).recent()[:limit]
 
+    def for_user_ordered_by_created_at(self, user):
+        return self.get_queryset().for_user(user).order_by("-created_at")
+
 
 class Plantphoto(models.Model):
     objects = PlantphotoManager()

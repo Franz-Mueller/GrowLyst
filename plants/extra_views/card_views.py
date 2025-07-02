@@ -26,6 +26,12 @@ class PlantDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -40,6 +46,12 @@ class PlantstageDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -54,6 +66,12 @@ class PlantstagelogDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -68,6 +86,12 @@ class StrainDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -82,6 +106,12 @@ class BreederDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -96,6 +126,12 @@ class MediumtypeDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -110,6 +146,12 @@ class MediumDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -124,6 +166,12 @@ class PlantphotoDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -138,6 +186,12 @@ class GrowDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -152,6 +206,12 @@ class GrowtypeDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -166,6 +226,12 @@ class EnvironmentDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -180,6 +246,12 @@ class MeasurementDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -194,6 +266,12 @@ class UnitDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -208,6 +286,12 @@ class UnittypeDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -222,6 +306,12 @@ class ActioncategoryDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -236,6 +326,12 @@ class ActiontypeDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -250,6 +346,12 @@ class ActionLogDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -264,6 +366,12 @@ class NutrientDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -278,6 +386,12 @@ class NutritionDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -292,6 +406,12 @@ class GroupDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
 
 
@@ -306,4 +426,10 @@ class MeasurementtypeDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["display_fields"] = get_display_fields(self.object)
         context["edit_url_name"] = self.edit_url_name
+
+        context["user_name"] = (
+            self.request.user.username
+            if self.request.user.is_authenticated
+            else "Guest"
+        )
         return context
