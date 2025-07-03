@@ -13,6 +13,7 @@ Nächste Anpassungen:
   - ~~Cards~~
 - ~~Bessere codestruktur~~
 - Visual Redesign
+- user auf allen seiten anzeigen (gallery)
 
 **verbessern**
 

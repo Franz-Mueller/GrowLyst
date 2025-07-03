@@ -17,7 +17,7 @@ def get_display_fields(obj, exclude=None):
 
 class PlantDetailView(LoginRequiredMixin, DetailView):
     model = Plant
-    template_name = "card.html"
+    template_name = "plants/plant.html"
     context_object_name = "object"
     pk_url_kwarg = "plant_id"
     edit_url_name = "edit_plant"

@@ -65,6 +65,12 @@ class Plant(models.Model):
         blank=True,
         null=True,
     )
+    current_stage = models.ForeignKey(
+        "Plantstage",
+        on_delete=models.PROTECT,
+        related_name="current_plants",
+        help_text="The current stage of the plant in its growth cycle.",
+    )
     profile_image = models.ImageField(
         upload_to="plant_profiles/", blank=True, null=True
     )
@@ -87,39 +93,28 @@ For now we use the admin panel.
 
 
 class PlantstageQuerySet(models.QuerySet):
-    def recent(self):
-        return self.order_by("-updated_at")
+    def by_order(self):
+        return self.order_by("-order")
 
-    def for_user(self, user):
-        return self.filter(user=user)
-
-    def for_user_and_global(self, user):
-        return self.filter(models.Q(user=user) | models.Q(user__isnull=True)).distinct()
+    def get_all(self):
+        return self.all()
 
 
 class PlantstageManager(models.Manager):
     def get_queryset(self):
         return PlantstageQuerySet(self.model, using=self._db)
 
-    def for_user(self, user):
-        return self.get_queryset().for_user(user)
-
-    def recent_for_user(self, user, limit=3):
-        return self.get_queryset().for_user(user).recent()[:limit]
-
-    def for_user_and_global(self, user):
-        return self.get_queryset().for_user_and_global(user)
+    def by_order(self):
+        return self.get_queryset().get_all().by_order()
 
 
 class Plantstage(models.Model):
     objects = PlantstageManager()
-    user = models.ForeignKey(
-        "auth.User",
-        on_delete=models.CASCADE,
-        related_name="plantstages",
-        blank=True,
-        null=True,
+    order = models.PositiveIntegerField(
+        default=0,
+        help_text="Order of the plant stage in the growth cycle. Lower numbers come first.",
     )
+
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
