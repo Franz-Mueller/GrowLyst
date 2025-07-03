@@ -76,18 +76,16 @@ WSGI_APPLICATION = "growlyst.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = {  # change for testing
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "growlyst",
-        "USER": "user",
-        "PASSWORD": "password",
-        "HOST": "localhost",  # when django runs outside of docker, this should be localhost
-        # when django runs inside docker, this should be the name of the db service in docker-compose
-        "PORT": "5432",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
