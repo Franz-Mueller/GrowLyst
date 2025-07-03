@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["www.growlyst.com", "growlyst.com", "localhost", "94.130.79.204"]
+ALLOWED_HOSTS = ["www.growlyst.com", "growlyst.com", "127.0.0.1", "94.130.79.204"]
 
 
 # Application definition
