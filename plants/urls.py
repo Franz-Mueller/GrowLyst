@@ -247,4 +247,5 @@ urlpatterns = [
         views.MeasurementtypeUpdateView.as_view(),
         name="edit_measurementtype",
     ),
+    path("progress_stage/<int:plant_id>", views.progress_stage, name="progress_stage"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

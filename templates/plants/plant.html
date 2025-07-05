@@ -1,4 +1,4 @@
 {% extends 'card.html' %} {% load static %} {% load bootstrap5 %}
 {% block extra_actions %}
-
+  <a href="{% url 'progress_stage' object.id %}" class="btn btn-outline-secondary me-2">Progress Stage</a>
 {% endblock %}
